@@ -2,12 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Wedding Invitation</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.0.0/remixicon.min.css">
   <style>
     body {
       font-family: 'Georgia', serif;
       text-align: center;
-      background: #fdf6f0;
+      background: #154123;
       color: #333;
       padding: 50px;
     }
@@ -24,11 +27,77 @@
     .qr {
       margin-top: 20px;
     }
+    .gallery-section {
+      margin-top: 40px;
+    }
+    .swiper {
+      width: 100%;
+      height: 400px;
+      position: relative;
+    }
+    .swiper-slide {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #f0f0f0;
+    }
+    .swiper-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .swiper-button-next,
+    .swiper-button-prev {
+      color: #b56576;
+    }
+    .toggleAudio {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: #b56576;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+      z-index: 1000;
+    }
+    .toggleAudio:hover {
+      background: #d6336c;
+      transform: scale(1.1);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    }
+    .toggleAudio:active {
+      transform: scale(0.95);
+    }
   </style>
 </head>
 <body>
+  <div id="welcome-modal"
+    style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); display: flex; align-items: center; justify-content: center; z-index: 10000;">
+    <div
+        style="background: white; padding: 30px 40px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); text-align: center;">
+        <h2 style="font-size: 28px; margin-bottom: 20px; font-family: 'Times New Roman', serif; color: #d6336c;">
+            Welcome to Our Wedding!
+        </h2>
+        <p style="font-size: 16px; margin-bottom: 30px; font-family: 'Georgia', serif;">
+            Thanks for celebrating this special day with us. Click 'Start' to begin the journey.
+        </p>
+        <button id="startButton"
+            style="padding: 12px 25px; font-size: 18px; color: white; background: #d6336c; border: none; border-radius: 5px; cursor: pointer; font-family: 'Arial', sans-serif;">
+            Start
+        </button>
+    </div>
+</div>
   <div class="card">
-    <h1>Tan & Gen’s Wedding</h1>
+    <h1>Jern & Gen’s Wedding</h1>
     <p>You are warmly invited to celebrate our special day.</p>
     <p><strong>Date:</strong> 20 December 2026</p>
     <p><strong>Venue:</strong> Pearl Hotel, Penang</p>
@@ -38,7 +107,100 @@
       <img src="qr-code.png" alt="Scan QR code for RSVP" width="200" height="200">
       <p>Scan the QR code to RSVP</p>
     </div>
+
+    <div class="gallery-section">
+      <h2>Our Moments</h2>
+      <div class="swiper">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide">
+            <img src="photo1.jpg" alt="Wedding Photo 1">
+          </div>
+          <div class="swiper-slide">
+            <img src="photo2.jpg" alt="Wedding Photo 2">
+          </div>
+          <div class="swiper-slide">
+            <img src="photo3.jpg" alt="Wedding Photo 3">
+          </div>
+          <div class="swiper-slide">
+            <img src="photo4.jpg" alt="Wedding Photo 4">
+          </div>
+        </div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+      </div>
+    </div>
   </div>
+
+
+  <!-- AUDIO -->
+    <audio src="https://raw.githubusercontent.com/wjernt/wedding-invitation/main/Music/bgm.mp3" loop id="audio">
+  </audio>
+  <button class='toggleAudio'>
+    <i class='ri-volume-up-fill'></i>
+  </button>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script>
+    // Initialize Swiper - this can run immediately
+    const swiper = new Swiper('.swiper', {
+      direction: "vertical",
+      effect: "coverflow",
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev"
+      }
+    });
+
+    // Wait for DOM to be ready before accessing elements
+    document.addEventListener('DOMContentLoaded', () => {
+      // Now safe to get elements
+      const startBtn = document.getElementById('startButton');
+      const audio = document.getElementById('audio');
+      const welcomeModal = document.getElementById('welcome-modal');
+      const toggleAudioBtn = document.querySelector('.toggleAudio');
+      const toggleIcon = toggleAudioBtn?.querySelector('i');
+
+      // Lock page scrolling initially
+      document.body.style.overflow = 'hidden';
+
+      // Start button listener
+      if (startBtn) {
+        startBtn.addEventListener('click', () => {
+          audio?.play();
+          if (welcomeModal) welcomeModal.style.display = 'none';
+          document.body.style.overflow = 'auto';
+        });
+      }
+      const updateAudioIcon = (isMuted) => {
+        toggleIcon?.classList.toggle('ri-volume-mute-fill', isMuted);
+        toggleIcon?.classList.toggle('ri-volume-up-fill', !isMuted);
+      };
+
+      // Toggle audio button
+      if (toggleAudioBtn) {
+        toggleAudioBtn.addEventListener('click', () => {
+          if (audio?.paused) {
+            audio.play();
+            updateAudioIcon(false); // Show volume icon when playing
+          } else {
+            audio?.pause();
+            updateAudioIcon(true); // Show mute icon when paused
+          }
+        });
+      }
+    });
+
+    // Visibility change can stay outside (doesn't need DOM elements)
+    document.addEventListener('visibilitychange', () => {
+      const audio = document.getElementById('audio');
+      if (document.hidden) {
+        audio?.pause();
+      } else {
+        audio?.play();
+      }
+    });
+  </script>
 </body>
 </html>
 
