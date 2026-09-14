@@ -1,0 +1,42 @@
+Category,Item,Current Value,Action Required,Recommended Specification,Status,Notes
+Wedding Details,Groom Name,Groom Name,Replace with the groom's full display name,Keep under 30 characters for best mobile display,Pending,Edit WEDDING_CONFIG.groomName
+Wedding Details,Bride Name,Bride Name,Replace with the bride's full display name,Keep under 30 characters for best mobile display,Pending,Edit WEDDING_CONFIG.brideName
+Wedding Details,Wedding Date,2026-12-20,Confirm the wedding date,Use YYYY-MM-DD format,Updated,Edit WEDDING_CONFIG.weddingDate
+Wedding Details,Wedding Time,07:00 PM,Replace with the confirmed reception time,Use hh:mm AM/PM format,Pending,Edit WEDDING_CONFIG.weddingTime
+Wedding Details,Timezone Offset,+08:00,Confirm the wedding venue timezone,Use +08:00 for Malaysia,Pending,Edit WEDDING_CONFIG.timeZoneOffset
+Venue,Venue Name,Wedding Venue,Enter the full venue name,Use the official hotel or ballroom name,Pending,Edit WEDDING_CONFIG.venueName
+Venue,Venue Address,"Venue Address, City, State",Enter the complete address,Include postcode for navigation,Pending,Edit WEDDING_CONFIG.venueAddress
+Venue,Google Maps Link,https://maps.google.com,Replace with the venue's shared Google Maps URL,Test it on both phone and desktop,Pending,Edit WEDDING_CONFIG.googleMapLink
+Venue,Waze Link,https://www.waze.com/ul?q=Venue%20Address&navigate=yes,Replace with the venue's shared Waze URL,Test it in the Waze app and a web browser,Pending,Edit WEDDING_CONFIG.wazeMapLink
+Contact,Contact Person,Contact Person,Enter the coordinator or family contact name,Choose someone available on the wedding day,Pending,Edit WEDDING_CONFIG.contactName
+Contact,Contact Phone,+60123456789,Enter a working contact number,Use Malaysian international format such as +60123456789,Pending,Edit WEDDING_CONFIG.contactPhone
+RSVP,Google Form URL,https://your-google-form-url,Replace with the published RSVP form URL,Test in a private browser window before publishing,Pending,Edit WEDDING_CONFIG.rsvpUrl
+RSVP,QR Code Image,qrcode.png,Generate a QR code for your RSVP link and save it with this file name,"Square PNG or JPG, at least 400x400, generated with any free QR code tool",Pending,"Edit WEDDING_CONFIG.qrCodeImage and WEDDING_CONFIG.qrCodeLink; shown in the RSVP section"
+Photo,Hero Image,hero.jpg,Add the main banner photo,"Landscape JPG or WebP; at least 1920x1080; under 500 KB",Pending,"Use a wide couple portrait with soft lighting and an uncluttered center; text overlays the image"
+Photo,Groom Portrait,groom.jpg,Add the groom portrait,"Square JPG or WebP; at least 600x600; under 250 KB",Pending,Use a centered close-up because the image is cropped into a circle
+Photo,Bride Portrait,bride.jpg,Add the bride portrait,"Square JPG or WebP; at least 600x600; under 250 KB",Pending,Use a centered close-up with lighting similar to the groom portrait
+Photo,Thank You Image,thankyou.jpg,Add the closing-section photo,"Landscape JPG or WebP; at least 1920x1080; under 500 KB",Pending,Use a romantic candid photo and keep important details away from the edges due to slow zoom
+Music,Background Music,music.mp3,Add the selected wedding music,"MP3; preferably instrumental; under 5 MB",Pending,Music loops and begins only after the guest interacts with the page
+Content,Couple Introductions,Placeholder text,Replace the bride and groom introduction paragraphs,Two or three short sentences each,Pending,Edit the Bride & Groom section paragraphs in the HTML
+Content,Wedding Day Timeline,Five events added,Review times descriptions and icons with the venue,Confirm the final run-of-show before publishing,Updated,Edit the TIMELINE_EVENTS array
+Content,Wedding Journey,Placeholder milestones,Replace dates titles descriptions and icons,Choose three to six meaningful milestones,Pending,Edit the JOURNEY_MILESTONES array
+Content,Guest Information,Placeholder information,Update parking dress code deadline contact and notes,Keep each description concise for mobile screens,Pending,Edit the GUEST_INFO_ITEMS array
+Content,Thank You Message,Placeholder message,Replace the closing message and quote,Use one short message and one romantic quote,Pending,Edit the Thank You section text
+Content,Page Wording,Placeholder copy,Review introductions headings buttons RSVP text and final quote,Keep wording concise for mobile screens,Pending,Edit the WEDDING_TEXT object near the top of the HTML
+Gallery,Gallery Feature,Disabled,Enable after adding pre-wedding or final photos,Set FEATURES.enableGallery to true,Pending,"Switch name: FEATURES.enableGallery. Leave disabled if no gallery is needed yet"
+Gallery,Gallery Photo 1,photo1.jpg,Add a key couple portrait,"Portrait or landscape; at least 1000 px wide; compressed",Pending,A formal portrait or favorite pre-wedding photo works well
+Gallery,Gallery Photo 2,photo2.jpg,Add a candid couple photo,"Portrait or landscape; at least 1000 px wide; compressed",Pending,Use a natural interaction or laughter moment
+Gallery,Gallery Photo 3,photo3.jpg,Add a detail photo,"Portrait or landscape; at least 1000 px wide; compressed",Pending,Rings bouquet invitation card or meaningful object
+Gallery,Gallery Photo 4,photo4.jpg,Add a location photo,"Portrait or landscape; at least 1000 px wide; compressed",Pending,A wide environmental image adds variety to the masonry layout
+Gallery,Gallery Photo 5,photo5.jpg,Add a second portrait,"Portrait or landscape; at least 1000 px wide; compressed",Pending,Use a different outfit location or composition
+Gallery,Gallery Photo 6,photo6.jpg,Add a closing gallery image,"Portrait or landscape; at least 1000 px wide; compressed",Pending,A warm romantic final frame works best
+Feature,Countdown,Enabled,Confirm the wedding date and time before publishing,Set FEATURES.enableCountdown to false if unnecessary,Pending,Countdown uses the visitor's local device time
+Feature,Music,Enabled,Confirm music file playback and volume,Set FEATURES.enableMusic to false if music is not wanted,Pending,Test on iPhone Android and desktop browsers
+Feature,Floating Particles,Enabled,Check readability over the final photos,Disable if particles distract from important details,Pending,Edit FEATURES.enableFloatingParticles
+Calendar,Calendar Event,4 hours,Confirm event duration and start time,Set the duration in hours,Pending,Edit WEDDING_CONFIG.eventDurationHours
+Testing,Mobile Layout,Not tested with final content,Test on a real iPhone and Android phone,Check names buttons images and long addresses,Pending,Also test portrait and landscape orientation
+Testing,Desktop Layout,Not tested with final content,Test at common laptop and desktop widths,Check image crops spacing and hover states,Pending,Try Chrome Edge Safari and Firefox where available
+Testing,All Links,Placeholder links,Open and verify map RSVP contact and calendar actions,Use a private browser window for public access checks,Pending,Do this after publishing to GitHub Pages
+Testing,Performance,Placeholder media,Compress all final images and audio,Aim for total initial page size below 3 MB excluding music,Pending,Use WebP images where practical
+Publishing,GitHub File Name,text.html,Rename or copy to index.html before publishing,Place index.html and media files in the same repository folder,Pending,Preserve the exact file-name capitalization used in WEDDING_CONFIG
+Publishing,GitHub Pages,Not configured,Enable GitHub Pages for the repository,Deploy from the branch and folder containing index.html,Pending,Verify the public URL after deployment

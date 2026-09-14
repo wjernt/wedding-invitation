@@ -1,206 +1,1294 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Wedding Invitation</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.0.0/remixicon.min.css">
-  <style>
-    body {
-      font-family: 'Georgia', serif;
-      text-align: center;
-      background: #154123;
-      color: #333;
-      padding: 50px;
-    }
-    .card {
-      border: 2px solid #d4a373;
-      padding: 30px;
-      border-radius: 15px;
-      background: #fff;
-      display: inline-block;
-    }
-    h1 {
-      color: #b56576;
-    }
-    .qr {
-      margin-top: 20px;
-    }
-    .gallery-section {
-      margin-top: 40px;
-    }
-    .swiper {
-      width: 100%;
-      height: 400px;
-      position: relative;
-    }
-    .swiper-slide {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: #f0f0f0;
-    }
-    .swiper-slide img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .swiper-button-next,
-    .swiper-button-prev {
-      color: #b56576;
-    }
-    .toggleAudio {
-      position: fixed;
-      bottom: 20px;
-      left: 20px;
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      background: #b56576;
-      color: white;
-      border: none;
-      cursor: pointer;
-      font-size: 24px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      transition: all 0.3s ease;
-      z-index: 1000;
-    }
-    .toggleAudio:hover {
-      background: #d6336c;
-      transform: scale(1.1);
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-    }
-    .toggleAudio:active {
-      transform: scale(0.95);
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Wedding Invitation</title>
+
+<!-- ======================================================================
+     CONFIGURATION
+     Edit everything below to personalize the invitation. No other part
+     of this file needs to change for basic content updates.
+     ====================================================================== -->
+<script>
+  // Core wedding details, contact info and media paths.
+  // All paths are relative to this HTML file unless a full URL is given.
+  const WEDDING_CONFIG = {
+    groomName: "Tan, Wei Jern",
+    brideName: "Genevieve, Chan Cheau Yann",
+
+    weddingDate: "2026-12-20",      // Format: YYYY-MM-DD
+    weddingTime: "07:00 PM",        // Format: hh:mm AM/PM
+    timeZoneOffset: "+08:00",       // Malaysia time (UTC+8)
+    eventDurationHours: 4,
+
+    venueName: "Wedding Venue",
+    venueAddress: "Venue Address, City, State",
+    googleMapLink: "https://maps.google.com",
+    wazeMapLink: "https://www.waze.com/ul?q=Venue%20Address&navigate=yes",
+
+    contactName: "Contact Person",
+    contactPhone: "+60123456789",
+
+    // Image paths -- see TODO comment block near the bottom of <body> for
+    // recommended dimensions / content for each placeholder.
+    heroImage: "hero.jpg",
+    bridePhoto: "bride.jpg",
+    groomPhoto: "groom.jpg",
+    thankYouPhoto: "thankyou.jpg",
+
+    backgroundMusic: "https://raw.githubusercontent.com/wjernt/wedding-invitation/main/Music/bgm.mp3",
+
+    rsvpUrl: "https://your-google-form-url",
+
+    // QR code shown in the RSVP section. Defaults to the RSVP link above,
+    // but you can point qrCodeLink at any URL (e.g. a wedding website).
+    qrCodeImage: "qrcode.png",
+    qrCodeLink: "https://your-google-form-url",
+
+    // Placeholder gallery images, only used when FEATURES.enableGallery = true
+    galleryImages: [
+      "photo1.jpg",
+      "photo2.jpg",
+      "photo3.jpg",
+      "photo4.jpg",
+      "photo5.jpg",
+      "photo6.jpg"
+    ]
+  };
+
+  // All visible page copy. Change wording here without editing the HTML.
+  const WEDDING_TEXT = {
+    loading: "loading...",
+    welcomeTitle: "The Wedding Of",
+    startJourney: "Start Journey",
+    heroEyebrow: "We're Getting Married",
+    viewLocation: "📍 View Location",
+    openGoogleMaps: "Google Maps",
+    openWaze: "Waze",
+    rsvpShort: "💌 RSVP",
+    contactUs: "📞 Contact Us",
+    addCalendar: "🗓️ Add To Calendar",
+    scroll: "Scroll",
+    coupleEyebrow: "Meet The Couple",
+    coupleTitle: "Bride & Groom",
+    coupleSubtitle: "A love story written by fate, celebrated with family and friends.",
+    groomRole: "The Groom",
+    groomIntroduction: "A devoted partner who believes in love, laughter, and forever. Excited to begin this new chapter.",
+    brideRole: "The Bride",
+    brideIntroduction: "Graceful, kind-hearted, and full of dreams. Grateful for the journey that led here.",
+    countdownEyebrow: "Save The Date",
+    countdownTitle: "Counting Down To Forever",
+    countdownSubtitle: "Every second brings us closer to our big day.",
+    detailsEyebrow: "Wedding Details",
+    detailsTitle: "When & Where",
+    detailsSubtitle: "Please join us to celebrate this joyous occasion.",
+    timelineEyebrow: "Run Of Show",
+    timelineTitle: "Wedding Day Timeline",
+    timelineSubtitle: "A glimpse into how our special day will unfold.",
+    journeyEyebrow: "Our Story",
+    journeyTitle: "Wedding Journey",
+    journeySubtitle: "The milestones that brought us to this moment.",
+    galleryTitle: "Our Favourite Moments",
+    gallerySubtitle: "A few frames from our journey together.",
+    rsvpEyebrow: "Kindly Reply",
+    rsvpTitle: "We'd Love To Celebrate With You",
+    rsvpMessage: "Please confirm your attendance so we can prepare a memorable celebration for you.",
+    confirmAttendance: "Confirm Attendance",
+    qrCaption: "Scan To RSVP",
+    guestEyebrow: "Good To Know",
+    guestTitle: "Guest Information",
+    guestSubtitle: "A few helpful notes ahead of the celebration.",
+    thankYouEyebrow: "Thank You",
+    thankYouTitle: "With Love & Gratitude",
+    thankYouQuote: "Together is a beautiful place to be — thank you for being part of our story.",
+    calendarDescription: "Join us as we celebrate our wedding day."
+  };
+
+  // Toggle major sections/behaviour on or off without touching markup.
+  const FEATURES = {
+    enableCountdown: true,
+    enableGallery: false,
+    enableMusic: true,
+    enableFloatingParticles: true
+  };
+
+  // Wedding day run-of-show. Add/remove/reorder items freely.
+  const TIMELINE_EVENTS = [
+    { time: "5:30 PM",  title: "Guest Registration",       description: "Guest arrival and registration.", icon: "📖" },
+    { time: "6:00 PM",  title: "ROM Ceremony",              description: "Registration of marriage ceremony.", icon: "💍" },
+    { time: "7:15 PM",  title: "Wedding Dinner (Buffet)",  description: "Buffet dinner service begins.", icon: "🍽️" },
+    { time: "8:35 PM",  title: "Tea Ceremony",              description: "Traditional tea ceremony with family.", icon: "🫖" },
+    { time: "10:00 PM", title: "End of Celebration",        description: "Thank you for celebrating with us tonight.", icon: "✨" }
+  ];
+
+  // Relationship milestones shown in the "Wedding Journey" section.
+  const JOURNEY_MILESTONES = [
+    { date: "2022-02-14", title: "ROM Registration", description: "We officially became husband and wife.", icon: "💍" },
+    { date: "2023-06-10", title: "Proposal Day",     description: "The day he got down on one knee.", icon: "💐" },
+    { date: "2026-11-01", title: "Tea Ceremony",     description: "Honoring our families with tradition.", icon: "🫖" },
+    { date: "2026-12-20", title: "Wedding Reception", description: "Celebrating our love with family and friends.", icon: "🎉" }
+  ];
+
+  // Practical information for guests. Replaces a traditional "gift" section.
+  const GUEST_INFO_ITEMS = [
+    { icon: "🚗", title: "Parking Information", description: "Complimentary parking available at the venue's main entrance." },
+    { icon: "👗", title: "Dress Code",          description: "Formal attire. Olive green and champagne tones welcomed, please avoid white." },
+    { icon: "📅", title: "RSVP Deadline",       description: "Kindly respond by 30 days before the wedding date." },
+    { icon: "📞", title: "Contact Person",      description: "Contact {contactName} at {contactPhone} for any questions." },
+    { icon: "📌", title: "Important Notes",     description: "Please arrive 30 minutes early. Kindly avoid heavy perfume during ceremony." }
+  ];
+</script>
+
+<!-- Google Fonts loaded non-blocking so slow/stalled connections still show
+     content immediately with fallback fonts, then swap in the premium
+     typefaces once they arrive (requires internet; self-host if fully
+     offline use is needed). A blocking <link rel="stylesheet"> here would
+     stall page rendering (and this file's own init script) until the font
+     request finishes. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style"
+      href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Poppins:wght@300;400;500;600&display=swap"
+      onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Poppins:wght@300;400;500;600&display=swap"></noscript>
+
+<style>
+  /* ====================================================================
+     0. ROOT VARIABLES & RESET
+     ==================================================================== */
+  :root{
+    --olive:#556B2F;
+    --deep-olive:#1F2A1F;
+    --champagne:#DCC9A9;
+    --gold:#C2A878;
+    --ivory:#F8F5EF;
+
+    --font-heading:'Playfair Display', serif;
+    --font-script:'Great Vibes', cursive;
+    --font-body:'Poppins', sans-serif;
+
+    --shadow-soft: 0 10px 40px rgba(31,42,31,0.15);
+    --shadow-strong: 0 20px 60px rgba(31,42,31,0.35);
+    --radius-lg: 24px;
+    --radius-md: 16px;
+    --ease: cubic-bezier(.22,.61,.36,1);
+  }
+
+  *,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  body{
+    font-family:var(--font-body);
+    background:var(--ivory);
+    color:var(--deep-olive);
+    overflow-x:hidden;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{ max-width:100%; display:block; }
+  a{ color:inherit; text-decoration:none; }
+  ul{ list-style:none; }
+  section{ position:relative; padding:80px 20px; }
+  h1,h2,h3,h4{ font-family:var(--font-heading); font-weight:600; color:var(--deep-olive); }
+  .script{ font-family:var(--font-script); }
+  .container{ max-width:1100px; margin:0 auto; }
+  .center{ text-align:center; }
+
+  .eyebrow{
+    display:inline-block; font-family:var(--font-body); letter-spacing:4px;
+    text-transform:uppercase; font-size:12px; color:var(--olive); font-weight:600;
+    margin-bottom:12px;
+  }
+  .section-title{ font-size:clamp(28px,5vw,44px); margin-bottom:8px; }
+  .section-sub{ font-size:clamp(15px,2vw,17px); color:#5a5f52; max-width:560px; margin:0 auto 40px; }
+
+  /* Glassmorphism utility */
+  .glass-card{
+    background:rgba(248,245,239,0.55);
+    backdrop-filter:blur(16px) saturate(140%);
+    -webkit-backdrop-filter:blur(16px) saturate(140%);
+    border:1px solid rgba(255,255,255,0.4);
+    border-radius:var(--radius-lg);
+    box-shadow:var(--shadow-soft);
+  }
+
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    padding:14px 30px; border-radius:100px; font-size:14px; font-weight:600;
+    letter-spacing:1px; text-transform:uppercase; cursor:pointer; border:none;
+    transition:transform .4s var(--ease), box-shadow .4s var(--ease);
+    position:relative; overflow:hidden;
+  }
+  .btn-primary{ background:linear-gradient(135deg,var(--olive),var(--deep-olive)); color:var(--ivory); box-shadow:0 8px 24px rgba(85,107,47,0.4); }
+  .btn-outline{ background:rgba(255,255,255,0.15); color:var(--ivory); border:1px solid rgba(255,255,255,0.6); backdrop-filter:blur(6px); }
+  .btn-gold{ background:linear-gradient(135deg,var(--gold),var(--champagne)); color:var(--deep-olive); box-shadow:0 8px 24px rgba(194,168,120,0.5); }
+  .btn:hover{ transform:translateY(-3px); box-shadow:0 14px 34px rgba(31,42,31,0.35); }
+  .btn:active{ transform:translateY(0); }
+  :focus-visible{ outline:3px solid var(--gold); outline-offset:4px; }
+  .btn::after{ /* glow sweep */
+    content:""; position:absolute; top:0; left:-60%; width:40%; height:100%;
+    background:linear-gradient(120deg,transparent,rgba(255,255,255,0.5),transparent);
+    transform:skewX(-20deg);
+  }
+  .btn:hover::after{ animation:btnSweep 1s var(--ease); }
+  @keyframes btnSweep{ from{ left:-60%; } to{ left:140%; } }
+
+  /* Scroll reveal */
+  .reveal{ opacity:0; transform:translateY(40px); transition:opacity .9s var(--ease), transform .9s var(--ease); }
+  .reveal.is-visible{ opacity:1; transform:translateY(0); }
+  .reveal-delay-1{ transition-delay:.1s; }
+  .reveal-delay-2{ transition-delay:.25s; }
+  .reveal-delay-3{ transition-delay:.4s; }
+
+  /* ====================================================================
+     1. PREMIUM LOADING SCREEN
+     ==================================================================== */
+  #loading-screen{
+    position:fixed; inset:0; z-index:9999; background:var(--deep-olive);
+    display:flex; align-items:center; justify-content:center; flex-direction:column; gap:18px;
+    transition:opacity .8s var(--ease), visibility .8s var(--ease);
+  }
+  #loading-screen.hidden{ opacity:0; visibility:hidden; pointer-events:none; }
+  .loader-ring{
+    width:64px; height:64px; border-radius:50%;
+    border:2px solid rgba(220,201,169,0.25); border-top-color:var(--gold);
+    animation:spin 1s linear infinite;
+  }
+  .loader-text{ font-family:var(--font-script); font-size:28px; color:var(--champagne); }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+
+  /* ====================================================================
+     2. WELCOME MODAL
+     ==================================================================== */
+  #welcome-screen{
+    position:fixed; inset:0; z-index:9998; display:flex; align-items:center; justify-content:center;
+    background:radial-gradient(circle at 50% 20%, #33421f 0%, var(--deep-olive) 70%);
+    transition:opacity 1s var(--ease), visibility 1s var(--ease);
+  }
+  #welcome-screen.fade-out{ opacity:0; visibility:hidden; pointer-events:none; }
+  .welcome-card{
+    max-width:420px; margin:20px; padding:56px 34px; text-align:center; color:var(--ivory);
+    border-radius:var(--radius-lg);
+    animation:welcomeIn 1.2s var(--ease);
+  }
+  @keyframes welcomeIn{ from{ opacity:0; transform:scale(.9); } to{ opacity:1; transform:scale(1); } }
+  .welcome-monogram{ font-family:var(--font-script); font-size:52px; color:var(--gold); margin-bottom:10px; }
+  .welcome-card h1{ color:var(--ivory); font-size:26px; margin-bottom:6px; letter-spacing:1px; }
+  .welcome-card p{ color:var(--champagne); font-size:14px; margin-bottom:34px; letter-spacing:.5px; }
+  .welcome-btn{ animation:pulseGlow 2.4s ease-in-out infinite; }
+  @keyframes pulseGlow{
+    0%,100%{ box-shadow:0 8px 24px rgba(194,168,120,0.5); }
+    50%{ box-shadow:0 8px 34px rgba(194,168,120,0.9); }
+  }
+
+  /* ====================================================================
+     3. FLOATING PARTICLES
+     ==================================================================== */
+  #particles-container{ position:fixed; inset:0; pointer-events:none; z-index:5; overflow:hidden; }
+  .particle{
+    position:absolute; bottom:-20px; border-radius:50%;
+    background:radial-gradient(circle, rgba(194,168,120,0.9), rgba(194,168,120,0));
+    animation:floatUp linear infinite; opacity:.7;
+  }
+  @keyframes floatUp{
+    from{ transform:translateY(0) translateX(0); opacity:0; }
+    10%{ opacity:.8; }
+    100%{ transform:translateY(-110vh) translateX(var(--drift,20px)); opacity:0; }
+  }
+
+  /* ====================================================================
+     4. HERO SECTION
+     ==================================================================== */
+  #hero{
+    position:relative; min-height:100svh; display:flex; align-items:center; justify-content:center;
+    text-align:center; color:var(--ivory); overflow:hidden; background-color:var(--deep-olive);
+    background-size:cover; background-position:center; padding:120px 20px 60px;
+  }
+  #hero::before{
+    content:""; position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(31,42,31,0.55) 0%, rgba(31,42,31,0.35) 45%, rgba(31,42,31,0.85) 100%);
+    z-index:1;
+  }
+  #hero.bg-missing{ background-image:linear-gradient(160deg,#3c4a2a,var(--deep-olive)); }
+  .hero-content{ position:relative; z-index:2; max-width:720px; }
+  .hero-content .eyebrow{ color:var(--champagne); }
+  .hero-names{ font-family:var(--font-script); font-size:clamp(46px,10vw,90px); color:var(--ivory); line-height:1.15; text-shadow:0 4px 30px rgba(0,0,0,0.35); white-space:nowrap; }
+  .hero-and{ display:block; font-size:.5em; color:var(--gold); margin:2px 0; }
+  .hero-meta{ margin-top:22px; font-size:clamp(14px,2vw,17px); letter-spacing:2px; text-transform:uppercase; color:var(--champagne); }
+  .hero-meta span{ display:inline-block; margin:0 6px; }
+  .hero-actions{ margin-top:38px; display:flex; flex-wrap:wrap; gap:14px; justify-content:center; }
+  .scroll-cue{ position:absolute; bottom:26px; left:50%; transform:translateX(-50%); z-index:2; color:var(--champagne); font-size:12px; letter-spacing:2px; text-transform:uppercase; }
+  .scroll-cue::after{ content:""; display:block; width:1px; height:36px; background:var(--gold); margin:8px auto 0; animation:scrollLine 1.8s ease-in-out infinite; }
+  @keyframes scrollLine{ 0%{ transform:scaleY(0); opacity:0; } 40%{ opacity:1; } 100%{ transform:scaleY(1); opacity:0; } }
+
+  /* ====================================================================
+     5. BRIDE & GROOM SECTION
+     ==================================================================== */
+  #couple{ background:var(--ivory); }
+  .couple-grid{ display:grid; gap:32px; grid-template-columns:1fr; max-width:900px; margin:0 auto; }
+  .couple-card{ padding:40px 28px; text-align:center; }
+  .photo-frame{
+    width:160px; height:160px; border-radius:50%; margin:0 auto 20px; position:relative; overflow:hidden;
+    background:linear-gradient(135deg,var(--gold),var(--champagne));
+    border:4px solid var(--ivory); box-shadow:0 10px 30px rgba(85,107,47,0.25);
+  }
+  .photo-frame img{ width:100%; height:100%; object-fit:cover; }
+  .photo-placeholder-label{
+    position:absolute; inset:0; display:flex; align-items:center; justify-content:center; text-align:center;
+    font-size:11px; font-weight:600; letter-spacing:.5px; color:var(--deep-olive); padding:10px; opacity:0;
+  }
+  .photo-frame.img-missing .photo-placeholder-label{ opacity:1; }
+  .couple-card h3{ font-size:24px; margin-bottom:6px; }
+  .couple-role{ color:var(--olive); font-size:13px; text-transform:uppercase; letter-spacing:2px; margin-bottom:14px; }
+  .couple-card p{ font-size:14px; color:#5a5f52; }
+  .couple-divider{ display:flex; align-items:center; justify-content:center; }
+  .couple-divider span{ font-family:var(--font-script); font-size:40px; color:var(--gold); }
+
+  /* ====================================================================
+     6. COUNTDOWN SECTION
+     ==================================================================== */
+  #countdown{ background:linear-gradient(160deg,var(--deep-olive),#2b3a24); color:var(--ivory); }
+  #countdown .eyebrow{ color:var(--gold); }
+  #countdown .section-title{ color:var(--ivory); }
+  #countdown .section-sub{ color:var(--champagne); }
+  .countdown-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:16px; max-width:560px; margin:0 auto; }
+  .countdown-box{ padding:26px 10px; text-align:center; color:var(--ivory); background:rgba(255,255,255,0.06); border-color:rgba(255,255,255,0.15); }
+  .countdown-num{ font-family:var(--font-heading); font-size:clamp(32px,6vw,52px); color:var(--gold); transition:transform .3s var(--ease); }
+  .countdown-num.tick{ transform:scale(1.15); }
+  .countdown-label{ font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--champagne); margin-top:6px; }
+
+  /* ====================================================================
+     7. WEDDING DETAILS
+     ==================================================================== */
+  #details{ background:var(--ivory); }
+  .details-grid{ display:grid; gap:20px; grid-template-columns:1fr; max-width:900px; margin:0 auto; }
+  .detail-card{ padding:30px 24px; text-align:center; }
+  .detail-icon{ font-size:30px; margin-bottom:14px; }
+  .detail-card h4{ font-size:18px; margin-bottom:6px; }
+  .detail-card p{ font-size:14px; color:#5a5f52; }
+  .map-actions{ display:grid; gap:10px; margin-top:14px; }
+  .map-actions .btn{ width:100%; padding:12px 16px; font-size:11px; }
+
+  /* ====================================================================
+     8. TIMELINE
+     ==================================================================== */
+  #timeline{ background:linear-gradient(180deg,var(--ivory),#f1ead9); }
+  .timeline{ position:relative; max-width:760px; margin:0 auto; }
+  .timeline::before{ content:""; position:absolute; left:24px; top:0; bottom:0; width:2px; background:linear-gradient(var(--gold),var(--champagne)); }
+  .timeline-item{ position:relative; padding-left:64px; margin-bottom:36px; }
+  .timeline-dot{
+    position:absolute; left:12px; top:2px; width:28px; height:28px; border-radius:50%;
+    background:var(--olive); color:var(--ivory); display:flex; align-items:center; justify-content:center;
+    font-size:14px; box-shadow:0 0 0 6px rgba(85,107,47,0.15);
+  }
+  .timeline-item .glass-card{ padding:18px 22px; }
+  .timeline-time{ font-size:12px; letter-spacing:1.5px; text-transform:uppercase; color:var(--olive); font-weight:600; }
+  .timeline-item h4{ font-size:18px; margin:4px 0 6px; }
+  .timeline-item p{ font-size:13.5px; color:#5a5f52; }
+
+  /* ====================================================================
+     9. WEDDING JOURNEY (MILESTONES)
+     ==================================================================== */
+  #journey{ background:var(--ivory); }
+  .journey-grid{ display:grid; gap:20px; grid-template-columns:1fr; max-width:1000px; margin:0 auto; }
+  .journey-card{ padding:28px 22px; text-align:center; }
+  .journey-icon{ font-size:28px; margin-bottom:12px; }
+  .journey-date{ font-size:12px; color:var(--olive); letter-spacing:1.5px; text-transform:uppercase; margin-bottom:6px; }
+  .journey-card h4{ font-size:17px; margin-bottom:6px; }
+  .journey-card p{ font-size:13.5px; color:#5a5f52; }
+
+  /* ====================================================================
+     10. GALLERY (optional) — 3D coverflow carousel
+     ==================================================================== */
+  #gallery{ background:linear-gradient(180deg,#f1ead9,var(--ivory)); overflow:hidden; }
+  .gallery-coverflow{
+    position:relative; max-width:1000px; height:300px; margin:0 auto; perspective:1400px;
+    touch-action:pan-y; cursor:grab; outline:none;
+  }
+  .gallery-coverflow.dragging{ cursor:grabbing; }
+  .coverflow-track{ position:relative; width:100%; height:100%; transform-style:preserve-3d; }
+  .coverflow-card{
+    position:absolute; top:50%; left:50%; width:190px; height:260px; margin:-130px 0 0 -95px;
+    border-radius:var(--radius-md); overflow:hidden; box-shadow:var(--shadow-strong); cursor:pointer;
+    transition:transform .7s cubic-bezier(.22,.61,.36,1), opacity .7s ease;
+    will-change:transform, opacity;
+  }
+  .coverflow-card img{ width:100%; height:100%; object-fit:cover; display:block; pointer-events:none; user-select:none; }
+  .coverflow-nav{
+    position:absolute; top:50%; transform:translateY(-50%); z-index:20; width:44px; height:44px; border-radius:50%;
+    border:1px solid rgba(255,255,255,.5); background:rgba(31,42,31,.55); color:var(--ivory); font-size:26px; cursor:pointer;
+  }
+  .coverflow-prev{ left:2px; } .coverflow-next{ right:2px; }
+  .coverflow-dots{ display:flex; justify-content:center; gap:8px; margin-top:20px; }
+  .coverflow-dot{ width:8px; height:8px; border-radius:50%; background:rgba(85,107,47,.3); cursor:pointer; border:none; transition:background .3s, transform .3s; padding:0; }
+  .coverflow-dot.active{ background:var(--olive); transform:scale(1.35); }
+  @media (min-width:700px){
+    .gallery-coverflow{ height:380px; }
+    .coverflow-card{ width:240px; height:330px; margin:-165px 0 0 -120px; }
+  }
+  #lightbox{ position:fixed; inset:0; background:rgba(15,20,12,0.92); z-index:10000; display:none; align-items:center; justify-content:center; padding:0; overflow:hidden; }
+  #lightbox.open{ display:flex; }
+  .lightbox-viewport{ width:100%; height:100%; overflow:hidden; touch-action:none; cursor:grab; }
+  .lightbox-viewport.dragging{ cursor:grabbing; }
+  .lightbox-track{ display:flex; height:100%; }
+  .lightbox-track.snap{ transition:transform .35s var(--ease); }
+  .lightbox-slide{ flex:0 0 100%; display:flex; align-items:center; justify-content:center; box-sizing:border-box; padding:30px; }
+  .lightbox-slide img{ max-width:100%; max-height:85vh; border-radius:12px; box-shadow:var(--shadow-strong); pointer-events:none; user-select:none; }
+  .lightbox-control{ position:absolute; color:var(--ivory); font-size:30px; cursor:pointer; background:rgba(31,42,31,.55); border:1px solid rgba(255,255,255,.35); width:48px; height:48px; border-radius:50%; z-index:1; }
+  #lightbox-close{ top:24px; right:24px; }
+  #lightbox-prev{ left:18px; top:50%; transform:translateY(-50%); }
+  #lightbox-next{ right:18px; top:50%; transform:translateY(-50%); }
+  .lightbox-counter{
+    position:absolute; bottom:24px; left:50%; transform:translateX(-50%); z-index:1;
+    color:var(--champagne); font-size:12px; letter-spacing:2px; background:rgba(31,42,31,.55);
+    padding:6px 16px; border-radius:100px;
+  }
+
+  /* ====================================================================
+     11. RSVP
+     ==================================================================== */
+  #rsvp{ background:linear-gradient(160deg,var(--olive),var(--deep-olive)); color:var(--ivory); text-align:center; }
+  #rsvp .section-sub{ color:var(--champagne); }
+  .rsvp-card{ max-width:520px; margin:0 auto; padding:50px 30px; color:var(--ivory); }
+  .rsvp-card .script{ font-size:34px; color:var(--gold); display:block; margin-bottom:10px; }
+  .qr-card{ margin-top:32px; display:flex; flex-direction:column; align-items:center; gap:10px; }
+  .qr-frame{ width:170px; height:170px; border-radius:16px; }
+  .qr-frame img{ object-fit:contain; background:#fff; padding:10px; }
+  .qr-caption{ font-size:12px; letter-spacing:1.5px; text-transform:uppercase; color:var(--champagne); }
+
+  /* ====================================================================
+     12. GUEST INFORMATION
+     ==================================================================== */
+  #guest-info{ background:var(--ivory); }
+  .guest-grid{ display:grid; gap:18px; grid-template-columns:1fr; max-width:1000px; margin:0 auto; }
+  .guest-card{ padding:26px 22px; }
+  .guest-card-icon{ font-size:24px; margin-bottom:10px; }
+  .guest-card h4{ font-size:16px; margin-bottom:6px; }
+  .guest-card p{ font-size:13.5px; color:#5a5f52; }
+
+  /* ====================================================================
+     13. THANK YOU SECTION
+     ==================================================================== */
+  #thankyou{
+    min-height:100svh; display:flex; align-items:center; justify-content:center; text-align:center;
+    color:var(--ivory); position:relative; overflow:hidden; background-size:cover; background-position:center;
+    background-color:var(--deep-olive); padding:60px 20px;
+  }
+  #thankyou::before{ content:""; position:absolute; inset:0; background:rgba(31,42,31,0.6); }
+  #thankyou.bg-missing{ background-image:linear-gradient(160deg,#3c4a2a,var(--deep-olive)); }
+  .thankyou-bg{ position:absolute; inset:0; background-size:cover; background-position:center; animation:slowZoom 20s ease-in-out infinite alternate; }
+  @keyframes slowZoom{ from{ transform:scale(1); } to{ transform:scale(1.12); } }
+  .thankyou-content{ position:relative; z-index:2; max-width:640px; }
+  .thankyou-content .script{ font-size:clamp(38px,7vw,64px); color:var(--gold); margin-bottom:14px; }
+  .thankyou-content h2{ color:var(--ivory); font-size:clamp(22px,4vw,30px); margin-bottom:16px; }
+  .thankyou-quote{ font-style:italic; color:var(--champagne); font-size:15px; }
+
+  /* ====================================================================
+     14. FLOATING MUSIC CONTROLLER
+     ==================================================================== */
+  #music-toggle{
+    position:fixed; bottom:24px; right:24px; z-index:9000; width:56px; height:56px; border-radius:50%;
+    background:linear-gradient(135deg,var(--gold),var(--olive)); color:var(--ivory); border:none; cursor:pointer;
+    box-shadow:0 10px 30px rgba(85,107,47,0.45); display:flex; align-items:center; justify-content:center; font-size:22px;
+    transition:transform .3s var(--ease);
+  }
+  #music-toggle:hover{ transform:scale(1.08); }
+  #music-toggle.spinning{ animation:spin 4s linear infinite; }
+
+  /* Footer */
+  footer{ text-align:center; padding:24px; font-size:12px; color:#8a8f7e; background:var(--ivory); }
+
+  /* ====================================================================
+     RESPONSIVE — TABLET
+     ==================================================================== */
+  @media (min-width:700px){
+    .couple-grid{ grid-template-columns:1fr auto 1fr; align-items:center; }
+    .countdown-grid{ grid-template-columns:repeat(4,1fr); }
+    .details-grid{ grid-template-columns:repeat(2,1fr); }
+    .journey-grid{ grid-template-columns:repeat(2,1fr); }
+    .guest-grid{ grid-template-columns:repeat(2,1fr); }
+    .gallery-masonry{ column-count:3; }
+  }
+
+  /* ====================================================================
+     RESPONSIVE — DESKTOP
+     ==================================================================== */
+  @media (min-width:1024px){
+    .details-grid{ grid-template-columns:repeat(4,1fr); }
+    .journey-grid{ grid-template-columns:repeat(4,1fr); }
+    .guest-grid{ grid-template-columns:repeat(3,1fr); }
+    .timeline-item:nth-child(even){ left:0; }
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    html{ scroll-behavior:auto; }
+    *,*::before,*::after{ animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; }
+    .particle{ display:none; }
+  }
+</style>
 </head>
 <body>
-  <div id="welcome-modal"
-    style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); display: flex; align-items: center; justify-content: center; z-index: 10000;">
-    <div
-        style="background: white; padding: 30px 40px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); text-align: center;">
-        <h2 style="font-size: 28px; margin-bottom: 20px; font-family: 'Times New Roman', serif; color: #d6336c;">
-            Welcome to Our Wedding!
-        </h2>
-        <p style="font-size: 16px; margin-bottom: 30px; font-family: 'Georgia', serif;">
-            Thanks for celebrating this special day with us. Click 'Start' to begin the journey.
-        </p>
-        <button id="startButton"
-            style="padding: 12px 25px; font-size: 18px; color: white; background: #d6336c; border: none; border-radius: 5px; cursor: pointer; font-family: 'Arial', sans-serif;">
-            Start
-        </button>
-    </div>
-</div>
-  <div class="card">
-    <h1>Jern & Gen’s Wedding</h1>
-    <p>You are warmly invited to celebrate our special day.</p>
-    <p><strong>Date:</strong> 20 December 2026</p>
-    <p><strong>Venue:</strong> Pearl Hotel, Penang</p>
-    <p><strong>Time:</strong> 6:00 PM</p>
 
-    <div class="qr">
-      <img src="qr-code.png" alt="Scan QR code for RSVP" width="200" height="200">
-      <p>Scan the QR code to RSVP</p>
-    </div>
+  <!-- ==================================================================
+       LOADING SCREEN
+       ================================================================== -->
+  <div id="loading-screen">
+    <div class="loader-ring"></div>
+    <div class="loader-text" data-copy="loading">loading...</div>
+  </div>
 
-    <div class="gallery-section">
-      <h2>Our Moments</h2>
-      <div class="swiper">
-        <div class="swiper-wrapper">
-          <div class="swiper-slide">
-            <img src="photo1.jpg" alt="Wedding Photo 1">
-          </div>
-          <div class="swiper-slide">
-            <img src="photo2.jpg" alt="Wedding Photo 2">
-          </div>
-          <div class="swiper-slide">
-            <img src="photo3.jpg" alt="Wedding Photo 3">
-          </div>
-          <div class="swiper-slide">
-            <img src="photo4.jpg" alt="Wedding Photo 4">
-          </div>
-        </div>
-        <div class="swiper-button-prev"></div>
-        <div class="swiper-button-next"></div>
-      </div>
+  <!-- ==================================================================
+       WELCOME MODAL
+       ================================================================== -->
+  <div id="welcome-screen" role="dialog" aria-modal="true" aria-labelledby="welcome-title">
+    <div class="welcome-card glass-card">
+      <div class="welcome-monogram script">J & G</div>
+      <h1 id="welcome-title" data-copy="welcomeTitle">The Wedding Of</h1>
+      <p data-text="groomName">Groom Name</p>
+      <p class="script" style="font-size:20px; color:var(--gold); margin-top:-24px; margin-bottom:34px;">&amp;</p>
+      <p data-text="brideName" style="margin-top:-24px;">Bride Name</p>
+      <button id="start-journey-btn" class="btn btn-gold welcome-btn" data-copy="startJourney">Start Journey</button>
     </div>
   </div>
 
+  <!-- Floating particles layer -->
+  <div id="particles-container"></div>
 
-  <!-- AUDIO -->
-    <audio src="https://raw.githubusercontent.com/wjernt/wedding-invitation/main/Music/bgm.mp3" loop id="audio">
-  </audio>
-  <button class='toggleAudio'>
-    <i class='ri-volume-up-fill'></i>
-  </button>
+  <!-- ==================================================================
+       HERO BANNER
+       ================================================================== -->
+  <header id="hero" data-bg="heroImage">
+    <div class="hero-content">
+      <span class="eyebrow" data-copy="heroEyebrow">We're Getting Married</span>
+      <h1 class="hero-names">
+        <span data-text="groomName">Groom Name</span>
+        <span class="hero-and script">&amp;</span>
+        <span data-text="brideName">Bride Name</span>
+      </h1>
+      <div class="hero-meta">
+        <span data-text="displayDate">Date</span> • <span data-text="weddingTime">Time</span> • <span data-text="venueName">Venue</span>
+      </div>
+      <div class="hero-actions">
+        <a class="btn btn-outline" href="#map-options" id="btn-view-location" data-copy="viewLocation">📍 View Location</a>
+        <a class="btn btn-primary" href="#rsvp" id="btn-rsvp" data-copy="rsvpShort">💌 RSVP</a>
+        <a class="btn btn-outline" href="#" id="btn-contact" data-copy="contactUs">📞 Contact Us</a>
+        <button class="btn btn-outline" id="btn-add-calendar" type="button" data-copy="addCalendar">🗓️ Add To Calendar</button>
+      </div>
+    </div>
+    <div class="scroll-cue" data-copy="scroll">Scroll</div>
+  </header>
 
+  <!-- ==================================================================
+       BRIDE & GROOM
+       ================================================================== -->
+  <section id="couple">
+    <div class="container center">
+      <span class="eyebrow reveal" data-copy="coupleEyebrow">Meet The Couple</span>
+      <h2 class="section-title reveal" data-copy="coupleTitle">Bride &amp; Groom</h2>
+      <p class="section-sub reveal" data-copy="coupleSubtitle">A love story written by fate, celebrated with family and friends.</p>
+    </div>
+    <div class="couple-grid">
+      <div class="couple-card glass-card reveal">
+        <div class="photo-frame">
+          <img data-img="groomPhoto" alt="Groom photo" onerror="this.style.display='none'; this.parentElement.classList.add('img-missing')">
+          <span class="photo-placeholder-label">Groom Photo</span>
+        </div>
+        <h3 data-text="groomName">Groom Name</h3>
+        <div class="couple-role" data-copy="groomRole">The Groom</div>
+        <p data-copy="groomIntroduction">A devoted partner who believes in love, laughter, and forever. Excited to begin this new chapter.</p>
+      </div>
+      <div class="couple-divider reveal"><span>&amp;</span></div>
+      <div class="couple-card glass-card reveal reveal-delay-1">
+        <div class="photo-frame">
+          <img data-img="bridePhoto" alt="Bride photo" onerror="this.style.display='none'; this.parentElement.classList.add('img-missing')">
+          <span class="photo-placeholder-label">Bride Photo</span>
+        </div>
+        <h3 data-text="brideName">Bride Name</h3>
+        <div class="couple-role" data-copy="brideRole">The Bride</div>
+        <p data-copy="brideIntroduction">Graceful, kind-hearted, and full of dreams. Grateful for the journey that led here.</p>
+      </div>
+    </div>
+  </section>
 
-  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-  <script>
-    // Initialize Swiper - this can run immediately
-    const swiper = new Swiper('.swiper', {
-      direction: "vertical",
-      effect: "coverflow",
-      navigation: {
-        nextEl: ".swiper-button-next",
-        prevEl: ".swiper-button-prev"
-      }
+  <!-- ==================================================================
+       COUNTDOWN (toggle: FEATURES.enableCountdown)
+       ================================================================== -->
+  <section id="countdown">
+    <div class="container center">
+      <span class="eyebrow reveal" data-copy="countdownEyebrow">Save The Date</span>
+      <h2 class="section-title reveal" data-copy="countdownTitle">Counting Down To Forever</h2>
+      <p class="section-sub reveal" data-copy="countdownSubtitle">Every second brings us closer to our big day.</p>
+    </div>
+    <div class="countdown-grid reveal">
+      <div class="countdown-box glass-card">
+        <div class="countdown-num" id="cd-days">00</div>
+        <div class="countdown-label">Days</div>
+      </div>
+      <div class="countdown-box glass-card">
+        <div class="countdown-num" id="cd-hours">00</div>
+        <div class="countdown-label">Hours</div>
+      </div>
+      <div class="countdown-box glass-card">
+        <div class="countdown-num" id="cd-minutes">00</div>
+        <div class="countdown-label">Minutes</div>
+      </div>
+      <div class="countdown-box glass-card">
+        <div class="countdown-num" id="cd-seconds">00</div>
+        <div class="countdown-label">Seconds</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================================================================
+       WEDDING DETAILS
+       ================================================================== -->
+  <section id="details">
+    <div class="container center">
+      <span class="eyebrow reveal" data-copy="detailsEyebrow">Wedding Details</span>
+      <h2 class="section-title reveal" data-copy="detailsTitle">When &amp; Where</h2>
+      <p class="section-sub reveal" data-copy="detailsSubtitle">Please join us to celebrate this joyous occasion.</p>
+    </div>
+    <div class="details-grid">
+      <div class="detail-card glass-card reveal">
+        <div class="detail-icon">📅</div>
+        <h4>Date</h4>
+        <p data-text="displayDate">Wedding Date</p>
+      </div>
+      <div class="detail-card glass-card reveal reveal-delay-1">
+        <div class="detail-icon">⏰</div>
+        <h4>Time</h4>
+        <p data-text="weddingTime">Wedding Time</p>
+      </div>
+      <div class="detail-card glass-card reveal reveal-delay-2">
+        <div class="detail-icon">🏛️</div>
+        <h4 data-text="venueName">Venue</h4>
+        <p data-text="venueAddress">Venue Address</p>
+      </div>
+      <div class="detail-card glass-card reveal reveal-delay-3" id="map-options">
+        <div class="detail-icon">🗺️</div>
+        <h4>Get There</h4>
+        <div class="map-actions">
+          <a class="btn btn-primary" href="#" id="btn-google-map" target="_blank" rel="noopener" data-copy="openGoogleMaps">Google Maps</a>
+          <a class="btn btn-gold" href="#" id="btn-waze-map" target="_blank" rel="noopener" data-copy="openWaze">Waze</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================================================================
+       WEDDING DAY TIMELINE (rendered from TIMELINE_EVENTS)
+       ================================================================== -->
+  <section id="timeline">
+    <div class="container center">
+      <span class="eyebrow reveal" data-copy="timelineEyebrow">Run Of Show</span>
+      <h2 class="section-title reveal" data-copy="timelineTitle">Wedding Day Timeline</h2>
+      <p class="section-sub reveal" data-copy="timelineSubtitle">A glimpse into how our special day will unfold.</p>
+    </div>
+    <div class="timeline" id="timeline-list" role="list"></div>
+  </section>
+
+  <!-- ==================================================================
+       WEDDING JOURNEY (rendered from JOURNEY_MILESTONES)
+       ================================================================== -->
+  <section id="journey">
+    <div class="container center">
+      <span class="eyebrow reveal" data-copy="journeyEyebrow">Our Story</span>
+      <h2 class="section-title reveal" data-copy="journeyTitle">Wedding Journey</h2>
+      <p class="section-sub reveal" data-copy="journeySubtitle">The milestones that brought us to this moment.</p>
+    </div>
+    <div class="journey-grid" id="journey-list" role="list"></div>
+  </section>
+
+  <!-- ==================================================================
+       GALLERY (toggle: FEATURES.enableGallery) — hidden by JS if disabled
+       ================================================================== -->
+  <section id="gallery">
+    <div class="container center">
+      <span class="eyebrow reveal">Gallery</span>
+      <h2 class="section-title reveal" data-copy="galleryTitle">Our Favourite Moments</h2>
+      <p class="section-sub reveal" data-copy="gallerySubtitle">A few frames from our journey together.</p>
+    </div>
+    <div class="gallery-coverflow" id="gallery-coverflow" tabindex="0">
+      <div class="coverflow-track" id="gallery-list" role="list"></div>
+      <button class="coverflow-nav coverflow-prev" id="gallery-prev" type="button" aria-label="Previous photo">&#8249;</button>
+      <button class="coverflow-nav coverflow-next" id="gallery-next" type="button" aria-label="Next photo">&#8250;</button>
+    </div>
+    <div class="coverflow-dots" id="gallery-dots"></div>
+  </section>
+
+  <!-- Lightbox for gallery: swipeable carousel (drag with touch or mouse) -->
+  <div id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer" aria-hidden="true">
+    <button class="lightbox-control" id="lightbox-close" type="button" aria-label="Close photo viewer">&times;</button>
+    <button class="lightbox-control" id="lightbox-prev" type="button" aria-label="Previous photo">&#8249;</button>
+    <div class="lightbox-viewport" id="lightbox-viewport">
+      <div class="lightbox-track" id="lightbox-track"></div>
+    </div>
+    <button class="lightbox-control" id="lightbox-next" type="button" aria-label="Next photo">&#8250;</button>
+    <div class="lightbox-counter" id="lightbox-counter" aria-live="polite"></div>
+  </div>
+
+  <!-- ==================================================================
+       RSVP
+       ================================================================== -->
+  <section id="rsvp">
+    <div class="rsvp-card glass-card reveal">
+      <span class="script" data-copy="rsvpEyebrow">Kindly Reply</span>
+      <h2 class="section-title" style="color:var(--ivory);" data-copy="rsvpTitle">We'd Love To Celebrate With You</h2>
+      <p style="margin-bottom:30px; color:var(--champagne);" data-copy="rsvpMessage">Please confirm your attendance so we can prepare a memorable celebration for you.</p>
+      <a class="btn btn-gold" id="btn-rsvp-form" href="#" target="_blank" rel="noopener" data-copy="confirmAttendance">Confirm Attendance</a>
+      <div class="qr-card">
+        <a href="#" id="qr-code-link" target="_blank" rel="noopener" aria-label="Open RSVP link">
+          <div class="photo-frame qr-frame">
+            <img data-img="qrCodeImage" alt="QR code" onerror="this.style.display='none'; this.parentElement.classList.add('img-missing')">
+            <span class="photo-placeholder-label">Add QR Code Image</span>
+          </div>
+        </a>
+        <p class="qr-caption" data-copy="qrCaption">Scan To RSVP</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================================================================
+       GUEST INFORMATION (rendered from GUEST_INFO_ITEMS)
+       ================================================================== -->
+  <section id="guest-info">
+    <div class="container center">
+      <span class="eyebrow reveal" data-copy="guestEyebrow">Good To Know</span>
+      <h2 class="section-title reveal" data-copy="guestTitle">Guest Information</h2>
+      <p class="section-sub reveal" data-copy="guestSubtitle">A few helpful notes ahead of the celebration.</p>
+    </div>
+    <div class="guest-grid" id="guest-info-list" role="list"></div>
+  </section>
+
+  <!-- ==================================================================
+       THANK YOU
+       ================================================================== -->
+  <section id="thankyou" data-bg="thankYouPhoto">
+    <div class="thankyou-content">
+      <span class="script" data-copy="thankYouEyebrow">Thank You</span>
+      <h2 data-copy="thankYouTitle">With Love &amp; Gratitude</h2>
+      <p class="thankyou-quote" data-copy="thankYouQuote">Together is a beautiful place to be — thank you for being part of our story.</p>
+    </div>
+  </section>
+
+  <footer>
+    <p><span data-text="groomName">Groom</span> &amp; <span data-text="brideName">Bride</span> — <span data-text="displayDate">Date</span></p>
+  </footer>
+
+  <!-- ==================================================================
+       FLOATING MUSIC CONTROLLER
+       ================================================================== -->
+  <button id="music-toggle" type="button" aria-label="Toggle background music">🎵</button>
+  <audio id="bg-music" loop preload="none"></audio>
+
+  <!-- ==================================================================
+       TODO — MANUAL CONTENT CHECKLIST (also see chat summary)
+       ------------------------------------------------------------------
+       1. Replace WEDDING_CONFIG values at the top of this file with real
+          wedding details (names, date, time, venue, contact, RSVP URL).
+       2. Add real media files next to this HTML file:
+          hero.jpg, bride.jpg, groom.jpg, thankyou.jpg, music.mp3,
+          and photo1.jpg..photo6.jpg if enabling the gallery.
+       3. Edit TIMELINE_EVENTS, JOURNEY_MILESTONES and GUEST_INFO_ITEMS
+          arrays near the top <script> block to match your real schedule.
+       4. Set FEATURES.enableGallery = true once gallery photos are ready.
+       ================================================================== -->
+
+<script>
+  /* ====================================================================
+     HELPERS
+     ==================================================================== */
+  function getConfigValue(key){
+    return key.split('.').reduce((obj, k) => (obj ? obj[k] : undefined), WEDDING_CONFIG);
+  }
+
+  function escapeHTML(value){
+    return String(value).replace(/[&<>'"]/g, char => ({
+      '&':'&amp;', '<':'&lt;', '>':'&gt;', "'":'&#39;', '"':'&quot;'
+    })[char]);
+  }
+
+  function fillPlaceholders(value){
+    return String(value).replace(/\{(\w+)\}/g, (_, key) => getConfigValue(key) ?? '');
+  }
+
+  // Human friendly date, e.g. "12 December 2026"
+  function formatDisplayDate(dateStr){
+    const d = new Date(dateStr + 'T00:00:00Z');
+    if(isNaN(d)) return dateStr;
+    return d.toLocaleDateString('en-GB', { day:'numeric', month:'long', year:'numeric', timeZone:'UTC' });
+  }
+  WEDDING_CONFIG.displayDate = formatDisplayDate(WEDDING_CONFIG.weddingDate);
+
+  // Combine weddingDate + weddingTime ("07:00 PM") into a real Date object.
+  function parseWeddingDateTime(){
+    const [time, meridiem] = WEDDING_CONFIG.weddingTime.split(' ');
+    let [h, m] = time.split(':').map(Number);
+    if(/pm/i.test(meridiem) && h !== 12) h += 12;
+    if(/am/i.test(meridiem) && h === 12) h = 0;
+    const hour = String(h).padStart(2, '0');
+    const minute = String(m).padStart(2, '0');
+    return new Date(`${WEDDING_CONFIG.weddingDate}T${hour}:${minute}:00${WEDDING_CONFIG.timeZoneOffset}`);
+  }
+
+  /* ====================================================================
+     BIND CONFIG VALUES INTO THE DOM
+     ==================================================================== */
+  function bindConfig(){
+    document.querySelectorAll('[data-text]').forEach(el => {
+      const val = getConfigValue(el.getAttribute('data-text'));
+      if(val !== undefined) el.textContent = val;
     });
+    document.querySelectorAll('[data-img]').forEach(img => {
+      const val = getConfigValue(img.getAttribute('data-img'));
+      if(val) img.src = val;
+    });
+    document.querySelectorAll('[data-copy]').forEach(el => {
+      const val = WEDDING_TEXT[el.getAttribute('data-copy')];
+      if(val !== undefined) el.textContent = val;
+    });
+  }
 
-    // Wait for DOM to be ready before accessing elements
-    document.addEventListener('DOMContentLoaded', () => {
-      // Now safe to get elements
-      const startBtn = document.getElementById('startButton');
-      const audio = document.getElementById('audio');
-      const welcomeModal = document.getElementById('welcome-modal');
-      const toggleAudioBtn = document.querySelector('.toggleAudio');
-      const toggleIcon = toggleAudioBtn?.querySelector('i');
+  // Sets a background image with a graceful fallback gradient if the
+  // configured file is missing (keeps the layout premium even before
+  // real photos are added).
+  function setBackgroundImage(el, url, fallbackClass){
+    const tester = new Image();
+    tester.onload = () => { el.style.backgroundImage = `url('${url}')`; };
+    tester.onerror = () => { el.classList.add(fallbackClass || 'bg-missing'); };
+    tester.src = url;
+  }
 
-      // Lock page scrolling initially
-      document.body.style.overflow = 'hidden';
+  /* ====================================================================
+     LOADING SCREEN + WELCOME MODAL
+     ==================================================================== */
+  window.addEventListener('load', () => {
+    document.getElementById('loading-screen').classList.add('hidden');
+  });
+  setTimeout(() => document.getElementById('loading-screen')?.classList.add('hidden'), 3000);
 
-      // Start button listener
-      if (startBtn) {
-        startBtn.addEventListener('click', () => {
-          audio?.play();
-          if (welcomeModal) welcomeModal.style.display = 'none';
-          document.body.style.overflow = 'auto';
-        });
-      }
-      const updateAudioIcon = (isMuted) => {
-        toggleIcon?.classList.toggle('ri-volume-mute-fill', isMuted);
-        toggleIcon?.classList.toggle('ri-volume-up-fill', !isMuted);
+  function initWelcomeModal(){
+    const startBtn = document.getElementById('start-journey-btn');
+    const welcomeScreen = document.getElementById('welcome-screen');
+    startBtn.addEventListener('click', () => {
+      welcomeScreen.classList.add('fade-out');
+      welcomeScreen.setAttribute('aria-hidden', 'true');
+      if(FEATURES.enableMusic) playMusic();
+    }, { once:true });
+  }
+
+  /* ====================================================================
+     BACKGROUND MUSIC CONTROLLER
+     ==================================================================== */
+  const musicBtn = document.getElementById('music-toggle');
+  const musicEl = document.getElementById('bg-music');
+
+  function initMusic(){
+    if(!FEATURES.enableMusic){
+      musicBtn.style.display = 'none';
+      return;
+    }
+    musicEl.src = WEDDING_CONFIG.backgroundMusic;
+    musicBtn.addEventListener('click', toggleMusic);
+  }
+  function playMusic(){
+    musicEl.play().then(() => {
+      musicBtn.textContent = '⏸';
+      musicBtn.setAttribute('aria-label', 'Pause background music');
+      musicBtn.setAttribute('aria-pressed', 'true');
+      musicBtn.classList.add('spinning');
+    }).catch(() => {
+      musicBtn.title = 'Music unavailable until a valid audio file is added';
+    });
+  }
+  function toggleMusic(){
+    if(musicEl.paused){ playMusic(); }
+    else{
+      musicEl.pause();
+      musicBtn.textContent = '🎵';
+      musicBtn.setAttribute('aria-label', 'Play background music');
+      musicBtn.setAttribute('aria-pressed', 'false');
+      musicBtn.classList.remove('spinning');
+    }
+  }
+
+  /* ====================================================================
+     FLOATING PARTICLES
+     ==================================================================== */
+  function initParticles(){
+    if(!FEATURES.enableFloatingParticles) return;
+    const container = document.getElementById('particles-container');
+    const count = 26;
+    for(let i = 0; i < count; i++){
+      const p = document.createElement('div');
+      p.className = 'particle';
+      const size = 3 + Math.random() * 6;
+      p.style.width = `${size}px`;
+      p.style.height = `${size}px`;
+      p.style.left = `${Math.random() * 100}vw`;
+      p.style.setProperty('--drift', `${(Math.random() - 0.5) * 120}px`);
+      const duration = 10 + Math.random() * 14;
+      p.style.animationDuration = `${duration}s`;
+      p.style.animationDelay = `${Math.random() * duration}s`;
+      container.appendChild(p);
+    }
+  }
+
+  /* ====================================================================
+     SCROLL REVEAL (lightweight AOS-style animation, no external library)
+     ==================================================================== */
+  function initScrollReveal(){
+    const items = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold:0.15 });
+    items.forEach(item => observer.observe(item));
+  }
+
+  /* ====================================================================
+     COUNTDOWN TIMER
+     ==================================================================== */
+  function initCountdown(){
+    const countdownSection = document.getElementById('countdown');
+    if(!FEATURES.enableCountdown){
+      countdownSection.style.display = 'none';
+      return;
+    }
+    const target = parseWeddingDateTime();
+    const els = {
+      days: document.getElementById('cd-days'),
+      hours: document.getElementById('cd-hours'),
+      minutes: document.getElementById('cd-minutes'),
+      seconds: document.getElementById('cd-seconds')
+    };
+    let previous = {};
+
+    function tick(){
+      const diff = Math.max(0, target - new Date());
+      const values = {
+        days: Math.floor(diff / 86400000),
+        hours: Math.floor(diff / 3600000) % 24,
+        minutes: Math.floor(diff / 60000) % 60,
+        seconds: Math.floor(diff / 1000) % 60
       };
+      Object.keys(values).forEach(key => {
+        const formatted = String(values[key]).padStart(2, '0');
+        if(previous[key] !== formatted){
+          els[key].textContent = formatted;
+          els[key].classList.add('tick');
+          setTimeout(() => els[key].classList.remove('tick'), 300);
+          previous[key] = formatted;
+        }
+      });
+    }
+    tick();
+    setInterval(tick, 1000);
+  }
 
-      // Toggle audio button
-      if (toggleAudioBtn) {
-        toggleAudioBtn.addEventListener('click', () => {
-          if (audio?.paused) {
-            audio.play();
-            updateAudioIcon(false); // Show volume icon when playing
-          } else {
-            audio?.pause();
-            updateAudioIcon(true); // Show mute icon when paused
-          }
-        });
-      }
+  /* ====================================================================
+     TIMELINE RENDERING
+     ==================================================================== */
+  function renderTimeline(){
+    const list = document.getElementById('timeline-list');
+    list.innerHTML = TIMELINE_EVENTS.map((item, i) => `
+      <div class="timeline-item reveal ${i % 3 === 1 ? 'reveal-delay-1' : i % 3 === 2 ? 'reveal-delay-2' : ''}" role="listitem">
+        <div class="timeline-dot">${escapeHTML(item.icon || '•')}</div>
+        <div class="glass-card">
+          <div class="timeline-time">${escapeHTML(item.time)}</div>
+          <h4>${escapeHTML(item.title)}</h4>
+          <p>${escapeHTML(item.description)}</p>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  /* ====================================================================
+     JOURNEY MILESTONES RENDERING
+     ==================================================================== */
+  function renderJourney(){
+    const list = document.getElementById('journey-list');
+    list.innerHTML = JOURNEY_MILESTONES.map((item, i) => `
+      <div class="journey-card glass-card reveal ${i % 3 === 1 ? 'reveal-delay-1' : i % 3 === 2 ? 'reveal-delay-2' : ''}" role="listitem">
+        <div class="journey-icon">${escapeHTML(item.icon || '💫')}</div>
+        <div class="journey-date">${formatDisplayDate(item.date)}</div>
+        <h4>${escapeHTML(item.title)}</h4>
+        <p>${escapeHTML(item.description)}</p>
+      </div>
+    `).join('');
+  }
+
+  /* ====================================================================
+     GALLERY RENDERING (only when FEATURES.enableGallery is true)
+     ==================================================================== */
+  function renderGallery(){
+    const gallerySection = document.getElementById('gallery');
+    if(!FEATURES.enableGallery){
+      gallerySection.style.display = 'none';
+      return;
+    }
+    const list = document.getElementById('gallery-list');
+    const dotsWrap = document.getElementById('gallery-dots');
+    list.innerHTML = WEDDING_CONFIG.galleryImages.map((src, index) => `
+      <div class="coverflow-card" role="listitem" aria-label="Photo ${index + 1} of ${WEDDING_CONFIG.galleryImages.length}">
+        <img src="${escapeHTML(src)}" alt="Wedding gallery photo ${index + 1}" loading="lazy"
+             onerror="this.closest('.coverflow-card').style.display='none'">
+      </div>
+    `).join('');
+    dotsWrap.innerHTML = WEDDING_CONFIG.galleryImages.map((_, i) => `<button class="coverflow-dot" type="button" aria-label="Go to photo ${i + 1}"></button>`).join('');
+
+    const lightbox = document.getElementById('lightbox');
+    const viewport = document.getElementById('lightbox-viewport');
+    const track = document.getElementById('lightbox-track');
+    const counter = document.getElementById('lightbox-counter');
+    const images = [...list.querySelectorAll('.coverflow-card img')];
+    if(!images.length) return;
+    let activeIndex = 0;
+    let viewportWidth = 0;
+
+    // --- Coverflow: one photo centered, neighbours peek at an angle in 3D ---
+    const coverflow = document.getElementById('gallery-coverflow');
+    const cards = [...list.querySelectorAll('.coverflow-card')];
+    const dots = [...dotsWrap.querySelectorAll('.coverflow-dot')];
+    const count = cards.length;
+    let coverIndex = 0;
+
+    const layoutCoverflow = () => {
+      cards.forEach((card, i) => {
+        let offset = i - coverIndex;
+        if(offset > count / 2) offset -= count;
+        if(offset < -count / 2) offset += count;
+        const abs = Math.abs(offset);
+        if(abs > 2){
+          card.style.opacity = '0';
+          card.style.zIndex = '0';
+          card.style.transform = `translateX(${Math.sign(offset) * 340}px) translateZ(-500px) rotateY(${Math.sign(offset) * -75}deg) scale(.35)`;
+          return;
+        }
+        // Large rotateY + translateZ gives the dramatic "spinning around" 3D look.
+        const translateX = offset * 150;
+        const translateZ = -abs * 190;
+        const rotateY = offset * -55;
+        const scale = 1 - abs * 0.24;
+        card.style.transform = `translateX(${translateX}px) translateZ(${translateZ}px) rotateY(${rotateY}deg) scale(${scale})`;
+        card.style.opacity = String(Math.max(1 - abs * 0.55, 0.2));
+        card.style.zIndex = String(10 - abs);
+      });
+      dots.forEach((dot, i) => dot.classList.toggle('active', i === coverIndex));
+    };
+
+    const goToCover = index => {
+      coverIndex = (index + count) % count;
+      layoutCoverflow();
+    };
+
+    cards.forEach((card, i) => {
+      card.addEventListener('click', () => {
+        if(i === coverIndex) openLightbox(i);
+        else goToCover(i);
+      });
+    });
+    dots.forEach((dot, i) => dot.addEventListener('click', () => goToCover(i)));
+    document.getElementById('gallery-prev').addEventListener('click', () => goToCover(coverIndex - 1));
+    document.getElementById('gallery-next').addEventListener('click', () => goToCover(coverIndex + 1));
+    coverflow.addEventListener('keydown', e => {
+      if(e.key === 'ArrowLeft') goToCover(coverIndex - 1);
+      if(e.key === 'ArrowRight') goToCover(coverIndex + 1);
+      if(e.key === 'Enter' || e.key === ' ') openLightbox(coverIndex);
     });
 
-    // Visibility change can stay outside (doesn't need DOM elements)
-    document.addEventListener('visibilitychange', () => {
-      const audio = document.getElementById('audio');
-      if (document.hidden) {
-        audio?.pause();
-      } else {
-        audio?.play();
-      }
+    // Drag-to-swipe the coverflow itself (touch, mouse and pen).
+    let coverDragging = false;
+    let coverStartX = 0;
+    coverflow.addEventListener('pointerdown', e => {
+      coverDragging = true;
+      coverStartX = e.clientX;
+      coverflow.classList.add('dragging');
+      coverflow.setPointerCapture(e.pointerId);
     });
-  </script>
+    const endCoverDrag = e => {
+      if(!coverDragging) return;
+      coverDragging = false;
+      coverflow.classList.remove('dragging');
+      const delta = e.clientX - coverStartX;
+      if(delta <= -40) goToCover(coverIndex + 1);
+      else if(delta >= 40) goToCover(coverIndex - 1);
+    };
+    coverflow.addEventListener('pointerup', endCoverDrag);
+    coverflow.addEventListener('pointercancel', endCoverDrag);
+
+    layoutCoverflow();
+
+    // Renders the previous/current/next photo as a 3-slide strip so
+    // dragging reveals the neighbouring photo, like a real swiper carousel.
+    const buildTrack = () => {
+      viewportWidth = viewport.clientWidth;
+      track.classList.remove('snap');
+      track.innerHTML = [-1, 0, 1].map(offset => {
+        const i = (activeIndex + offset + images.length) % images.length;
+        return `<div class="lightbox-slide"><img src="${images[i].src}" alt="${images[i].alt}"></div>`;
+      }).join('');
+      track.style.transform = `translateX(${-viewportWidth}px)`;
+      counter.textContent = `${activeIndex + 1} / ${images.length}`;
+    };
+
+    // Animates one slide left/right, then silently rebuilds the strip
+    // around the new active photo so it can keep sliding indefinitely.
+    const slide = direction => {
+      track.classList.add('snap');
+      track.style.transform = `translateX(${-viewportWidth * (1 + direction)}px)`;
+      track.addEventListener('transitionend', () => {
+        activeIndex = (activeIndex + direction + images.length) % images.length;
+        buildTrack();
+      }, { once:true });
+    };
+
+    const closeLightbox = () => {
+      lightbox.classList.remove('open');
+      lightbox.setAttribute('aria-hidden', 'true');
+      images[activeIndex]?.focus();
+    };
+
+    // Opens the full-view swiper lightbox at the given photo index (called
+    // when the centered coverflow photo is tapped or activated).
+    const openLightbox = index => {
+      activeIndex = index;
+      buildTrack();
+      lightbox.classList.add('open');
+      lightbox.setAttribute('aria-hidden', 'false');
+      document.getElementById('lightbox-close').focus();
+    };
+
+    // Drag-to-swipe: works with touch, mouse and pen via Pointer Events.
+    let dragging = false;
+    let dragStartX = 0;
+    let dragDeltaX = 0;
+    viewport.addEventListener('pointerdown', e => {
+      dragging = true;
+      dragStartX = e.clientX;
+      dragDeltaX = 0;
+      track.classList.remove('snap');
+      viewport.classList.add('dragging');
+      viewport.setPointerCapture(e.pointerId);
+    });
+    viewport.addEventListener('pointermove', e => {
+      if(!dragging) return;
+      dragDeltaX = e.clientX - dragStartX;
+      track.style.transform = `translateX(${-viewportWidth + dragDeltaX}px)`;
+    });
+    const endDrag = () => {
+      if(!dragging) return;
+      dragging = false;
+      viewport.classList.remove('dragging');
+      const threshold = viewportWidth * 0.18;
+      if(dragDeltaX <= -threshold) slide(1);
+      else if(dragDeltaX >= threshold) slide(-1);
+      else{
+        track.classList.add('snap');
+        track.style.transform = `translateX(${-viewportWidth}px)`;
+      }
+    };
+    viewport.addEventListener('pointerup', endDrag);
+    viewport.addEventListener('pointercancel', endDrag);
+
+    document.getElementById('lightbox-prev').addEventListener('click', () => slide(-1));
+    document.getElementById('lightbox-next').addEventListener('click', () => slide(1));
+    document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', e => { if(e.target === lightbox) closeLightbox(); });
+    document.addEventListener('keydown', e => {
+      if(!lightbox.classList.contains('open')) return;
+      if(e.key === 'Escape') closeLightbox();
+      if(e.key === 'ArrowLeft') slide(-1);
+      if(e.key === 'ArrowRight') slide(1);
+    });
+    window.addEventListener('resize', () => {
+      if(lightbox.classList.contains('open')) buildTrack();
+    });
+  }
+
+  /* ====================================================================
+     GUEST INFORMATION RENDERING
+     ==================================================================== */
+  function renderGuestInfo(){
+    const list = document.getElementById('guest-info-list');
+    list.innerHTML = GUEST_INFO_ITEMS.map((item, i) => `
+      <div class="guest-card glass-card reveal ${i % 3 === 1 ? 'reveal-delay-1' : i % 3 === 2 ? 'reveal-delay-2' : ''}" role="listitem">
+        <div class="guest-card-icon">${escapeHTML(item.icon)}</div>
+        <h4>${escapeHTML(item.title)}</h4>
+        <p>${escapeHTML(fillPlaceholders(item.description))}</p>
+      </div>
+    `).join('');
+  }
+
+  /* ====================================================================
+     QUICK ACTIONS: MAP, CONTACT, CALENDAR, RSVP
+     ==================================================================== */
+  function initQuickActions(){
+    document.getElementById('btn-google-map').href = WEDDING_CONFIG.googleMapLink;
+    document.getElementById('btn-waze-map').href = WEDDING_CONFIG.wazeMapLink;
+    document.getElementById('btn-contact').addEventListener('click', (e) => {
+      e.preventDefault();
+      window.location.href = `tel:${WEDDING_CONFIG.contactPhone}`;
+    });
+    document.getElementById('btn-rsvp-form').href = WEDDING_CONFIG.rsvpUrl;
+    document.getElementById('qr-code-link').href = WEDDING_CONFIG.qrCodeLink;
+
+    document.getElementById('btn-add-calendar').addEventListener('click', downloadCalendarInvite);
+  }
+
+  // Generates a downloadable .ics file so guests can add the event to
+  // any calendar app without needing a Google account.
+  function downloadCalendarInvite(){
+    const start = parseWeddingDateTime();
+    const end = new Date(start.getTime() + WEDDING_CONFIG.eventDurationHours * 60 * 60 * 1000);
+    const toICSDate = (d) => d.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+    const escapeICS = value => String(value).replace(/\\/g, '\\\\').replace(/\r?\n/g, '\\n').replace(/([,;])/g, '\\$1');
+    const ics = [
+      'BEGIN:VCALENDAR',
+      'VERSION:2.0',
+      'PRODID:-//Wedding Invitation//EN',
+      'BEGIN:VEVENT',
+      `UID:wedding-${WEDDING_CONFIG.weddingDate}-${WEDDING_CONFIG.groomName}-${WEDDING_CONFIG.brideName}`.replace(/[^a-zA-Z0-9@._:-]/g, '-'),
+      `DTSTAMP:${toICSDate(new Date())}`,
+      `SUMMARY:${escapeICS(`${WEDDING_CONFIG.groomName} & ${WEDDING_CONFIG.brideName}'s Wedding`)}`,
+      `DTSTART:${toICSDate(start)}`,
+      `DTEND:${toICSDate(end)}`,
+      `LOCATION:${escapeICS(`${WEDDING_CONFIG.venueName}, ${WEDDING_CONFIG.venueAddress}`)}`,
+      `DESCRIPTION:${escapeICS(WEDDING_TEXT.calendarDescription)}`,
+      'END:VEVENT',
+      'END:VCALENDAR'
+    ].join('\r\n');
+    const blob = new Blob([ics], { type:'text/calendar' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'wedding-invite.ics';
+    link.click();
+    URL.revokeObjectURL(link.href);
+  }
+
+  /* ====================================================================
+     INIT
+     ==================================================================== */
+  document.addEventListener('DOMContentLoaded', () => {
+    document.title = `${WEDDING_CONFIG.groomName} & ${WEDDING_CONFIG.brideName} | Wedding Invitation`;
+    bindConfig();
+    setBackgroundImage(document.getElementById('hero'), WEDDING_CONFIG.heroImage, 'bg-missing');
+    setBackgroundImage(document.getElementById('thankyou'), WEDDING_CONFIG.thankYouPhoto, 'bg-missing');
+    initWelcomeModal();
+    initMusic();
+    initParticles();
+    renderTimeline();
+    renderJourney();
+    renderGallery();
+    renderGuestInfo();
+    initQuickActions();
+    initCountdown();
+    initScrollReveal();
+  });
+</script>
 </body>
 </html>
-
