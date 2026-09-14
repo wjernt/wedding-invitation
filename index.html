@@ -157,13 +157,15 @@
 
 <style>
   /* ====================================================================
-     0. ROOT VARIABLES & RESET
+     0. ROOT VARIABLES & RESET  C2A878
      ==================================================================== */
   :root{
-    --olive:#556B2F;
+    --olive:#71864d;
     --deep-olive:#1F2A1F;
+    --light-champagne:#e4dccd;
     --champagne:#DCC9A9;
-    --gold:#C2A878;
+    --gold:#c2a878;
+    --dark-champagne:#927f5b;
     --ivory:#F8F5EF;
 
     --font-heading:'Playfair Display', serif;
@@ -274,9 +276,9 @@
     animation:welcomeIn 1.2s var(--ease);
   }
   @keyframes welcomeIn{ from{ opacity:0; transform:scale(.9); } to{ opacity:1; transform:scale(1); } }
-  .welcome-monogram{ font-family:var(--font-script); font-size:52px; color:var(--gold); margin-bottom:10px; }
+  .welcome-monogram{ font-family:var(--font-script); font-size:52px; color:var(--deep-olive); margin-bottom:10px; }
   .welcome-card h1{ color:var(--ivory); font-size:26px; margin-bottom:6px; letter-spacing:1px; }
-  .welcome-card p{ color:var(--champagne); font-size:14px; margin-bottom:34px; letter-spacing:.5px; }
+  .welcome-card p{ color:var(--light-champagne); font-size:14px; margin-bottom:34px; letter-spacing:.5px; }
   .welcome-btn{ animation:pulseGlow 2.4s ease-in-out infinite; }
   @keyframes pulseGlow{
     0%,100%{ box-shadow:0 8px 24px rgba(194,168,120,0.5); }
@@ -452,7 +454,7 @@
   #rsvp{ background:linear-gradient(160deg,var(--olive),var(--deep-olive)); color:var(--ivory); text-align:center; }
   #rsvp .section-sub{ color:var(--champagne); }
   .rsvp-card{ max-width:520px; margin:0 auto; padding:50px 30px; color:var(--ivory); }
-  .rsvp-card .script{ font-size:34px; color:var(--gold); display:block; margin-bottom:10px; }
+  .rsvp-card .script{ font-size:34px; color:var(--dark-champagne); display:block; margin-bottom:10px; }
   .qr-card{ margin-top:32px; display:flex; flex-direction:column; align-items:center; gap:10px; }
   .qr-frame{ width:170px; height:170px; border-radius:16px; }
   .qr-frame img{ object-fit:contain; background:#fff; padding:10px; }
@@ -547,7 +549,7 @@
       <div class="welcome-monogram script">J & G</div>
       <h1 id="welcome-title" data-copy="welcomeTitle">The Wedding Of</h1>
       <p data-text="groomName">Groom Name</p>
-      <p class="script" style="font-size:20px; color:var(--gold); margin-top:-24px; margin-bottom:34px;">&amp;</p>
+      <p class="script" style="font-size:20px; color:var(--champagne); margin-top:-24px; margin-bottom:34px;">&amp;</p>
       <p data-text="brideName" style="margin-top:-24px;">Bride Name</p>
       <button id="start-journey-btn" class="btn btn-gold welcome-btn" data-copy="startJourney">Start Journey</button>
     </div>
@@ -568,7 +570,7 @@
         <span data-text="brideName">Bride Name</span>
       </h1>
       <div class="hero-meta">
-        <span data-text="displayDate">Date</span> • <span data-text="weddingTime">Time</span> • <span data-text="venueName">Venue</span>
+        <span id="heroDay">Day</span> • <span data-text="displayDate">Date</span> • <span data-text="weddingTime">Time</span> • <span data-text="venueName">Venue</span>
       </div>
       <div class="hero-actions">
         <a class="btn btn-outline" href="#map-options" id="btn-view-location" data-copy="viewLocation">📍 View Location</a>
@@ -736,7 +738,7 @@
     <div class="rsvp-card glass-card reveal">
       <span class="script" data-copy="rsvpEyebrow">Kindly Reply</span>
       <h2 class="section-title" style="color:var(--ivory);" data-copy="rsvpTitle">We'd Love To Celebrate With You</h2>
-      <p style="margin-bottom:30px; color:var(--champagne);" data-copy="rsvpMessage">Please confirm your attendance so we can prepare a memorable celebration for you.</p>
+      <p style="margin-bottom:30px; color:var(--dark-champagne);" data-copy="rsvpMessage">Please confirm your attendance so we can prepare a memorable celebration for you.</p>
       <a class="btn btn-gold" id="btn-rsvp-form" href="#" target="_blank" rel="noopener" data-copy="confirmAttendance">Confirm Attendance</a>
       <div class="qr-card">
         <a href="#" id="qr-code-link" target="_blank" rel="noopener" aria-label="Open RSVP link">
@@ -814,7 +816,7 @@
     return String(value).replace(/\{(\w+)\}/g, (_, key) => getConfigValue(key) ?? '');
   }
 
-  // Human friendly date, e.g. "12 December 2026"
+  // Human friendly date, e.g. "20 December 2026"
   function formatDisplayDate(dateStr){
     const d = new Date(dateStr + 'T00:00:00Z');
     if(isNaN(d)) return dateStr;
