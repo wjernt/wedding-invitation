@@ -1,15 +1,15 @@
 Category,Item,Current Value,Action Required,Recommended Specification,Status,Notes
-Wedding Details,Groom Name,Groom Name,Replace with the groom's full display name,Keep under 30 characters for best mobile display,Pending,Edit WEDDING_CONFIG.groomName
-Wedding Details,Bride Name,Bride Name,Replace with the bride's full display name,Keep under 30 characters for best mobile display,Pending,Edit WEDDING_CONFIG.brideName
+Wedding Details,Groom Name,Groom Name,Replace with the groom's full display name,Keep under 30 characters for best mobile display,Updated,Edit WEDDING_CONFIG.groomName
+Wedding Details,Bride Name,Bride Name,Replace with the bride's full display name,Keep under 30 characters for best mobile display,Updated,Edit WEDDING_CONFIG.brideName
 Wedding Details,Wedding Date,2026-12-20,Confirm the wedding date,Use YYYY-MM-DD format,Updated,Edit WEDDING_CONFIG.weddingDate
-Wedding Details,Wedding Time,07:00 PM,Replace with the confirmed reception time,Use hh:mm AM/PM format,Pending,Edit WEDDING_CONFIG.weddingTime
-Wedding Details,Timezone Offset,+08:00,Confirm the wedding venue timezone,Use +08:00 for Malaysia,Pending,Edit WEDDING_CONFIG.timeZoneOffset
-Venue,Venue Name,Wedding Venue,Enter the full venue name,Use the official hotel or ballroom name,Pending,Edit WEDDING_CONFIG.venueName
-Venue,Venue Address,"Venue Address, City, State",Enter the complete address,Include postcode for navigation,Pending,Edit WEDDING_CONFIG.venueAddress
-Venue,Google Maps Link,https://maps.google.com,Replace with the venue's shared Google Maps URL,Test it on both phone and desktop,Pending,Edit WEDDING_CONFIG.googleMapLink
-Venue,Waze Link,https://www.waze.com/ul?q=Venue%20Address&navigate=yes,Replace with the venue's shared Waze URL,Test it in the Waze app and a web browser,Pending,Edit WEDDING_CONFIG.wazeMapLink
-Contact,Contact Person,Contact Person,Enter the coordinator or family contact name,Choose someone available on the wedding day,Pending,Edit WEDDING_CONFIG.contactName
-Contact,Contact Phone,+60123456789,Enter a working contact number,Use Malaysian international format such as +60123456789,Pending,Edit WEDDING_CONFIG.contactPhone
+Wedding Details,Wedding Time,06:00 PM,Replace with the confirmed reception time,Use hh:mm AM/PM format,Updated,Edit WEDDING_CONFIG.weddingTime
+Wedding Details,Timezone Offset,+08:00,Confirm the wedding venue timezone,Use +08:00 for Malaysia,Updated,Edit WEDDING_CONFIG.timeZoneOffset
+Venue,Venue Name,Wedding Venue,Enter the full venue name,Use the official hotel or ballroom name,Updated,Edit WEDDING_CONFIG.venueName
+Venue,Venue Address,"Venue Address, City, State",Enter the complete address,Include postcode for navigation,Updated,Edit WEDDING_CONFIG.venueAddress
+Venue,Google Maps Link,https://maps.app.goo.gl/NJ5pVFTJfJNTN5K77,Replace with the venue's shared Google Maps URL,Test it on both phone and desktop,Updated,Edit WEDDING_CONFIG.googleMapLink
+Venue,Waze Link,https://ul.waze.com/ul?place=ChIJD-AhAgDDSjAROIRh_xvwQ20&ll=5.44766890%2C100.30663460&navigate=yes&utm_campaign=default&utm_source=waze_website&utm_medium=lm_share_location,Replace with the venue's shared Waze URL,Test it in the Waze app and a web browser,Updated           ,Edit WEDDING_CONFIG.wazeMapLink
+Contact,Contact Person,Tan, Wei Jern,Enter the coordinator or family contact name,Choose someone available on the wedding day,Pending,Edit WEDDING_CONFIG.contactName
+Contact,Contact Phone,+60165188361,Enter a working contact number,Use Malaysian international format such as +60123456789,Pending,Edit WEDDING_CONFIG.contactPhone
 RSVP,Google Form URL,https://your-google-form-url,Replace with the published RSVP form URL,Test in a private browser window before publishing,Pending,Edit WEDDING_CONFIG.rsvpUrl
 RSVP,QR Code Image,qrcode.png,Generate a QR code for your RSVP link and save it with this file name,"Square PNG or JPG, at least 400x400, generated with any free QR code tool",Pending,"Edit WEDDING_CONFIG.qrCodeImage and WEDDING_CONFIG.qrCodeLink; shown in the RSVP section"
 Photo,Hero Image,hero.jpg,Add the main banner photo,"Landscape JPG or WebP; at least 1920x1080; under 500 KB",Pending,"Use a wide couple portrait with soft lighting and an uncluttered center; text overlays the image"

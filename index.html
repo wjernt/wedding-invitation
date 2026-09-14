@@ -18,21 +18,21 @@
     brideName: "Genevieve, Chan Cheau Yann",
 
     weddingDate: "2026-12-20",      // Format: YYYY-MM-DD
-    weddingTime: "07:00 PM",        // Format: hh:mm AM/PM
+    weddingTime: "06:00 PM",        // Format: hh:mm AM/PM
     timeZoneOffset: "+08:00",       // Malaysia time (UTC+8)
     eventDurationHours: 4,
 
-    venueName: "Wedding Venue",
-    venueAddress: "Venue Address, City, State",
-    googleMapLink: "https://maps.google.com",
-    wazeMapLink: "https://www.waze.com/ul?q=Venue%20Address&navigate=yes",
+    venueName: "POPIPOP HOUSE",
+    venueAddress: "6-W, Jalan Siput Kepah, Seri Tanjung Pinang, 10470 Tanjung Tokong, Pulau Pinang, Malaysia",
+    googleMapLink: "https://maps.app.goo.gl/NJ5pVFTJfJNTN5K77",
+    wazeMapLink: "https://ul.waze.com/ul?place=ChIJD-AhAgDDSjAROIRh_xvwQ20&ll=5.44766890%2C100.30663460&navigate=yes&utm_campaign=default&utm_source=waze_website&utm_medium=lm_share_location",
 
-    contactName: "Contact Person",
-    contactPhone: "+60123456789",
+    contactName: "Tan, Wei Jern",
+    contactPhone: "+60165188361",
 
     // Image paths -- see TODO comment block near the bottom of <body> for
     // recommended dimensions / content for each placeholder.
-    heroImage: "hero.jpg",
+    heroImage: "Picture/hero.png",
     bridePhoto: "bride.jpg",
     groomPhoto: "groom.jpg",
     thankYouPhoto: "thankyou.jpg",
@@ -563,7 +563,7 @@
       <h1 class="hero-names">
         <span data-text="groomName">Groom Name</span>
         <span class="hero-and script">&amp;</span>
-        <span data-text="brideName">Genevieve,<br>Chan Cheau yann</span>
+        <span data-text="Genevieve ,<br>Chan Cheau Yann">Genevieve ,<br>Chan Cheau Yann</span>
       </h1>
       <div class="hero-meta">
         <span data-text="displayDate">Date</span> • <span data-text="weddingTime">Time</span> • <span data-text="venueName">Venue</span>
@@ -911,6 +911,21 @@
       musicBtn.classList.remove('spinning');
     }
   }
+
+  /* ====================================================================
+     PAUSE MUSIC WHEN PAGE IS HIDDEN
+     ==================================================================== */
+  document.addEventListener('visibilitychange', () => {
+    if(document.hidden){
+      musicEl?.pause();
+      musicBtn.textContent = '🎵';
+      musicBtn.setAttribute('aria-label', 'Play background music');
+      musicBtn.setAttribute('aria-pressed', 'false');
+      musicBtn.classList.remove('spinning');
+    } else {
+      playMusic();
+    }
+  });
 
   /* ====================================================================
      FLOATING PARTICLES
