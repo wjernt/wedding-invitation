@@ -117,17 +117,18 @@
   const TIMELINE_EVENTS = [
     { time: "5:30 PM",  title: "Guest Registration",       description: "Guest arrival and registration.", icon: "📖" },
     { time: "6:00 PM",  title: "ROM Ceremony",              description: "Registration of marriage ceremony.", icon: "💍" },
-    { time: "7:15 PM",  title: "Wedding Dinner (Buffet)",  description: "Buffet dinner service begins.", icon: "🍽️" },
+    { time: "7:15 PM",  title: "Wedding Dinner",            description: "Buffet dinner service begins.", icon: "🍽️" },
     { time: "8:35 PM",  title: "Tea Ceremony",              description: "Traditional tea ceremony with family.", icon: "🫖" },
     { time: "10:00 PM", title: "End of Celebration",        description: "Thank you for celebrating with us tonight.", icon: "✨" }
   ];
 
   // Relationship milestones shown in the "Wedding Journey" section.
   const JOURNEY_MILESTONES = [
+    { date: "2019-12-25", title: "First Chapter", description: "A quiet first meeting through a mutual friend at a medical checkup, planting a seed for the future.", icon: "🌱" },
+    { date: "2020-10-16", title: "Among Us Era", description: "Reconnected through late-night Among Us sessions.", icon: "🎮" },
+    { date: "2021-09-01", title: "Hand in Hand", description: "The beginning of our journey together.", icon: "❤️" },
     { date: "2025-05-20", title: "Proposal Day",     description: "The day he got down on one knee.", icon: "💐" },
-    { date: "2026-12-20", title: "ROM Registration", description: "We officially became husband and wife.", icon: "💍" },
-    { date: "2026-12-20", title: "Tea Ceremony",     description: "Honoring our families with tradition.", icon: "🫖" },
-    { date: "2026-12-20", title: "Wedding Reception", description: "Celebrating our love with family and friends.", icon: "🎉" }
+    { date: "2026-12-20", title: "Wedding Reception", description: "Exchanging our vows and celebrating the start of our forever together.", icon: "💍/🫖/🎉" }
   ];
 
   // Practical information for guests. Replaces a traditional "gift" section.
@@ -563,7 +564,7 @@
       <h1 class="hero-names">
         <span data-text="groomName">Groom Name</span>
         <span class="hero-and script">&amp;</span>
-        <span data-text="Genevieve Chan">Genevieve Chan</span>
+        <span data-text="brideName">Bride Name</span>
       </h1>
       <div class="hero-meta">
         <span data-text="displayDate">Date</span> • <span data-text="weddingTime">Time</span> • <span data-text="venueName">Venue</span>
