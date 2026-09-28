@@ -32,10 +32,10 @@
 
     // Image paths -- see TODO comment block near the bottom of <body> for
     // recommended dimensions / content for each placeholder.
-    heroImage: "Picture/hero.png",
+    heroImage: "Picture/hero.jpeg",
     bridePhoto: "bride.jpg",
     groomPhoto: "groom.jpg",
-    thankYouPhoto: "thankyou.jpg",
+    thankYouPhoto: "Picture/thankyou.jpeg",
 
     backgroundMusic: "https://raw.githubusercontent.com/wjernt/wedding-invitation/main/Music/bgm.mp3",
 
@@ -99,6 +99,15 @@
     guestEyebrow: "Good To Know",
     guestTitle: "Guest Information",
     guestSubtitle: "A few helpful notes ahead of the celebration.",
+    gardenNoticeEyebrow: "Important Notice",
+    gardenNoticeTitle: "Garden Wedding",
+    gardenNoticeText: "Please note: the ROM ceremony will be held outdoors in the garden, while dinner is indoors.",
+    gardenNoticeOutdoor: "ROM Ceremony: Outdoor Garden",
+    gardenNoticeIndoor: "Dinner: Indoor Hall",
+    gardenNoticeTitleZh: "花园婚礼",
+    gardenNoticeTextZh: "请注意：结婚登记仪式将在花园室外举行，晚宴则安排在室内。",
+    gardenNoticeOutdoorZh: "结婚仪式：花园室外",
+    gardenNoticeIndoorZh: "晚宴：室内会场",
     thankYouEyebrow: "Thank You",
     thankYouTitle: "With Love & Gratitude",
     thankYouQuote: "Together is a beautiful place to be — thank you for being part of our story.",
@@ -115,8 +124,8 @@
 
   // Wedding day run-of-show. Add/remove/reorder items freely.
   const TIMELINE_EVENTS = [
-    { time: "5:30 PM",  title: "Guest Registration",       description: "Guest arrival and registration.", icon: "📖" },
-    { time: "6:00 PM",  title: "ROM Ceremony",              description: "Registration of marriage ceremony.", icon: "💍" },
+    { time: "5:30 PM",  title: "Guest Registration & Cocktail",       description: "Guest arrival, registration, and welcome cocktail.", icon: "🍸" },
+    { time: "6:10 PM",  title: "ROM Ceremony",              description: "Registration of marriage ceremony.", icon: "💍" },
     { time: "7:15 PM",  title: "Wedding Dinner",            description: "Buffet dinner service begins.", icon: "🍽️" },
     { time: "8:35 PM",  title: "Tea Ceremony",              description: "Traditional tea ceremony with family.", icon: "🫖" },
     { time: "10:00 PM", title: "End of Celebration",        description: "Thank you for celebrating with us tonight.", icon: "✨" }
@@ -135,8 +144,9 @@
   // Practical information for guests. Replaces a traditional "gift" section.
   const GUEST_INFO_ITEMS = [
     { icon: "🚗", title: "Parking Information", description: "Complimentary parking available at the venue's main entrance." },
-    { icon: "👗", title: "Dress Code",          description: "Formal attire. Olive green and champagne tones welcomed, please avoid white." },
-    { icon: "📅", title: "RSVP Deadline",       description: "Kindly respond by 30 days before the wedding date." },
+    { icon: "👗", title: "Dress Code",          description: "Garden wedding — kindly wear attire that is elegant yet comfortable." },
+    { icon: "📅", title: "RSVP Deadline",       description: "Kindly respond by 30 days before the wedding date. 20-11-2026" },
+    { icon: "🌿", title: "Venue Note",          description: "Please note: the ROM ceremony is outdoors in the garden, while dinner will be held indoors." },
     { icon: "📞", title: "Contact Person",      description: "Contact {contactName} at {contactPhone} for any questions." },
     { icon: "📌", title: "Important Notes",     description: "Please arrive 30 minutes early. Kindly avoid heavy perfume during ceremony." }
   ];
@@ -160,13 +170,13 @@
      0. ROOT VARIABLES & RESET  C2A878
      ==================================================================== */
   :root{
-    --olive:#71864d;
-    --deep-olive:#1F2A1F;
-    --light-champagne:#e4dccd;
-    --champagne:#DCC9A9;
-    --gold:#c2a878;
-    --dark-champagne:#927f5b;
-    --ivory:#F8F5EF;
+    --crimson:#8b1f2d;
+    --deep-crimson:#3d0f18;
+    --blush:#f9e7d7;
+    --peach-gold:#f2d7a1;
+    --gold:#d4af6d;
+    --deep-gold:#b57a39;
+    --ivory:#fffaf5;
 
     --font-heading:'Playfair Display', serif;
     --font-script:'Great Vibes', cursive;
@@ -184,7 +194,7 @@
   body{
     font-family:var(--font-body);
     background:var(--ivory);
-    color:var(--deep-olive);
+    color:var(--deep-crimson);
     overflow-x:hidden;
     line-height:1.6;
     -webkit-font-smoothing:antialiased;
@@ -193,18 +203,18 @@
   a{ color:inherit; text-decoration:none; }
   ul{ list-style:none; }
   section{ position:relative; padding:80px 20px; }
-  h1,h2,h3,h4{ font-family:var(--font-heading); font-weight:600; color:var(--deep-olive); }
+  h1,h2,h3,h4{ font-family:var(--font-heading); font-weight:600; color:var(--deep-crimson); }
   .script{ font-family:var(--font-script); }
   .container{ max-width:1100px; margin:0 auto; }
   .center{ text-align:center; }
 
   .eyebrow{
     display:inline-block; font-family:var(--font-body); letter-spacing:4px;
-    text-transform:uppercase; font-size:12px; color:var(--olive); font-weight:600;
+    text-transform:uppercase; font-size:12px; color:var(--crimson); font-weight:600;
     margin-bottom:12px;
   }
   .section-title{ font-size:clamp(28px,5vw,44px); margin-bottom:8px; }
-  .section-sub{ font-size:clamp(15px,2vw,17px); color:#5a5f52; max-width:560px; margin:0 auto 40px; }
+  .section-sub{ font-size:clamp(15px,2vw,17px); color:#714a4d; max-width:560px; margin:0 auto 40px; }
 
   /* Glassmorphism utility */
   .glass-card{
@@ -223,9 +233,9 @@
     transition:transform .4s var(--ease), box-shadow .4s var(--ease);
     position:relative; overflow:hidden;
   }
-  .btn-primary{ background:linear-gradient(135deg,var(--olive),var(--deep-olive)); color:var(--ivory); box-shadow:0 8px 24px rgba(85,107,47,0.4); }
+  .btn-primary{ background:linear-gradient(135deg,var(--crimson),var(--deep-crimson)); color:var(--ivory); box-shadow:0 8px 24px rgba(120,25,38,0.42); }
   .btn-outline{ background:rgba(255,255,255,0.15); color:var(--ivory); border:1px solid rgba(255,255,255,0.6); backdrop-filter:blur(6px); }
-  .btn-gold{ background:linear-gradient(135deg,var(--gold),var(--champagne)); color:var(--deep-olive); box-shadow:0 8px 24px rgba(194,168,120,0.5); }
+  .btn-gold{ background:linear-gradient(135deg,var(--gold),var(--peach-gold)); color:var(--deep-crimson); box-shadow:0 8px 24px rgba(212,175,109,0.5); }
   .btn:hover{ transform:translateY(-3px); box-shadow:0 14px 34px rgba(31,42,31,0.35); }
   .btn:active{ transform:translateY(0); }
   :focus-visible{ outline:3px solid var(--gold); outline-offset:4px; }
@@ -236,6 +246,32 @@
   }
   .btn:hover::after{ animation:btnSweep 1s var(--ease); }
   @keyframes btnSweep{ from{ left:-60%; } to{ left:140%; } }
+
+  .garden-notice{ padding-top:20px; }
+  .garden-banner{
+    background:linear-gradient(135deg, rgba(139,31,45,0.96), rgba(61,15,24,0.96));
+    color:var(--ivory); border:1px solid rgba(255,255,255,0.2);
+    padding:32px 22px; text-align:center; border-radius:28px; box-shadow:0 20px 50px rgba(61,15,24,0.22);
+  }
+  .garden-badge{
+    display:inline-block; padding:10px 18px; border-radius:999px; background:rgba(255,255,255,0.1);
+    color:var(--peach-gold); font-size:11px; letter-spacing:2px; text-transform:uppercase; margin-bottom:16px;
+    font-weight:700;
+  }
+  .garden-banner h3{
+    font-size:clamp(32px,5vw,54px); color:var(--ivory); margin-bottom:14px; line-height:1.2;
+  }
+  .garden-banner h3 span{ display:block; color:var(--peach-gold); font-size:0.72em; }
+  .garden-banner p{
+    font-size:clamp(16px,2vw,22px); font-weight:600; margin:10px 0; color:var(--blush);
+    line-height:1.7;
+  }
+  .garden-banner .notice-line{
+    display:block; padding:14px 18px; margin-top:12px; border-radius:16px;
+    background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12);
+  }
+  .garden-banner strong{ color:var(--peach-gold); }
+  .garden-banner .notice-chinese{ color:var(--blush); font-size:0.9em; }
 
   /* Scroll reveal */
   .reveal{ opacity:0; transform:translateY(40px); transition:opacity .9s var(--ease), transform .9s var(--ease); }
@@ -248,7 +284,7 @@
      1. PREMIUM LOADING SCREEN
      ==================================================================== */
   #loading-screen{
-    position:fixed; inset:0; z-index:9999; background:var(--deep-olive);
+    position:fixed; inset:0; z-index:9999; background:var(--deep-crimson);
     display:flex; align-items:center; justify-content:center; flex-direction:column; gap:18px;
     transition:opacity .8s var(--ease), visibility .8s var(--ease);
   }
@@ -258,7 +294,7 @@
     border:2px solid rgba(220,201,169,0.25); border-top-color:var(--gold);
     animation:spin 1s linear infinite;
   }
-  .loader-text{ font-family:var(--font-script); font-size:28px; color:var(--champagne); }
+  .loader-text{ font-family:var(--font-script); font-size:28px; color:var(--peach-gold); }
   @keyframes spin{ to{ transform:rotate(360deg); } }
 
   /* ====================================================================
@@ -266,7 +302,7 @@
      ==================================================================== */
   #welcome-screen{
     position:fixed; inset:0; z-index:9998; display:flex; align-items:center; justify-content:center;
-    background:radial-gradient(circle at 50% 20%, #33421f 0%, var(--deep-olive) 70%);
+    background:radial-gradient(circle at 50% 20%, #5a121d 0%, var(--deep-crimson) 70%);
     transition:opacity 1s var(--ease), visibility 1s var(--ease);
   }
   #welcome-screen.fade-out{ opacity:0; visibility:hidden; pointer-events:none; }
@@ -276,9 +312,9 @@
     animation:welcomeIn 1.2s var(--ease);
   }
   @keyframes welcomeIn{ from{ opacity:0; transform:scale(.9); } to{ opacity:1; transform:scale(1); } }
-  .welcome-monogram{ font-family:var(--font-script); font-size:52px; color:var(--deep-olive); margin-bottom:10px; }
+  .welcome-monogram{ font-family:var(--font-script); font-size:52px; color:var(--deep-crimson); margin-bottom:10px; }
   .welcome-card h1{ color:var(--ivory); font-size:26px; margin-bottom:6px; letter-spacing:1px; }
-  .welcome-card p{ color:var(--light-champagne); font-size:14px; margin-bottom:34px; letter-spacing:.5px; }
+  .welcome-card p{ color:var(--blush); font-size:14px; margin-bottom:34px; letter-spacing:.5px; }
   .welcome-btn{ animation:pulseGlow 2.4s ease-in-out infinite; }
   @keyframes pulseGlow{
     0%,100%{ box-shadow:0 8px 24px rgba(194,168,120,0.5); }
@@ -291,7 +327,7 @@
   #particles-container{ position:fixed; inset:0; pointer-events:none; z-index:5; overflow:hidden; }
   .particle{
     position:absolute; bottom:-20px; border-radius:50%;
-    background:radial-gradient(circle, rgba(194,168,120,0.9), rgba(194,168,120,0));
+    background:radial-gradient(circle, rgba(212,175,109,0.9), rgba(212,175,109,0));
     animation:floatUp linear infinite; opacity:.7;
   }
   @keyframes floatUp{
@@ -305,23 +341,23 @@
      ==================================================================== */
   #hero{
     position:relative; min-height:100svh; display:flex; align-items:center; justify-content:center;
-    text-align:center; color:var(--ivory); overflow:hidden; background-color:var(--deep-olive);
+    text-align:center; color:var(--ivory); overflow:hidden; background-color:var(--deep-crimson);
     background-size:cover; background-position:center; padding:120px 20px 60px;
   }
   #hero::before{
     content:""; position:absolute; inset:0;
-    background:linear-gradient(180deg, rgba(31,42,31,0.55) 0%, rgba(31,42,31,0.35) 45%, rgba(31,42,31,0.85) 100%);
+    background:linear-gradient(180deg, rgba(61,15,24,0.55) 0%, rgba(61,15,24,0.35) 45%, rgba(61,15,24,0.85) 100%);
     z-index:1;
   }
-  #hero.bg-missing{ background-image:linear-gradient(160deg,#3c4a2a,var(--deep-olive)); }
+  #hero.bg-missing{ background-image:linear-gradient(160deg,#5b1020,var(--deep-crimson)); }
   .hero-content{ position:relative; z-index:2; max-width:720px; }
-  .hero-content .eyebrow{ color:var(--champagne); }
+  .hero-content .eyebrow{ color:var(--peach-gold); }
   .hero-names{ font-family:var(--font-script); font-size:clamp(46px,10vw,90px); color:var(--ivory); line-height:1.15; text-shadow:0 4px 30px rgba(0,0,0,0.35); }
   .hero-and{ display:block; font-size:.5em; color:var(--gold); margin:2px 0; }
-  .hero-meta{ margin-top:22px; font-size:clamp(14px,2vw,17px); letter-spacing:2px; text-transform:uppercase; color:var(--champagne); }
+  .hero-meta{ margin-top:22px; font-size:clamp(14px,2vw,17px); letter-spacing:2px; text-transform:uppercase; color:var(--peach-gold); }
   .hero-meta span{ display:inline-block; margin:0 6px; }
   .hero-actions{ margin-top:38px; display:flex; flex-wrap:wrap; gap:14px; justify-content:center; }
-  .scroll-cue{ position:absolute; bottom:26px; left:50%; transform:translateX(-50%); z-index:2; color:var(--champagne); font-size:12px; letter-spacing:2px; text-transform:uppercase; }
+  .scroll-cue{ position:absolute; bottom:26px; left:50%; transform:translateX(-50%); z-index:2; color:var(--peach-gold); font-size:12px; letter-spacing:2px; text-transform:uppercase; }
   .scroll-cue::after{ content:""; display:block; width:1px; height:36px; background:var(--gold); margin:8px auto 0; animation:scrollLine 1.8s ease-in-out infinite; }
   @keyframes scrollLine{ 0%{ transform:scaleY(0); opacity:0; } 40%{ opacity:1; } 100%{ transform:scaleY(1); opacity:0; } }
 
@@ -333,33 +369,33 @@
   .couple-card{ padding:40px 28px; text-align:center; }
   .photo-frame{
     width:160px; height:160px; border-radius:50%; margin:0 auto 20px; position:relative; overflow:hidden;
-    background:linear-gradient(135deg,var(--gold),var(--champagne));
-    border:4px solid var(--ivory); box-shadow:0 10px 30px rgba(85,107,47,0.25);
+    background:linear-gradient(135deg,var(--gold),var(--peach-gold));
+    border:4px solid var(--ivory); box-shadow:0 10px 30px rgba(120,25,38,0.22);
   }
   .photo-frame img{ width:100%; height:100%; object-fit:cover; }
   .photo-placeholder-label{
     position:absolute; inset:0; display:flex; align-items:center; justify-content:center; text-align:center;
-    font-size:11px; font-weight:600; letter-spacing:.5px; color:var(--deep-olive); padding:10px; opacity:0;
+    font-size:11px; font-weight:600; letter-spacing:.5px; color:var(--deep-crimson); padding:10px; opacity:0;
   }
   .photo-frame.img-missing .photo-placeholder-label{ opacity:1; }
   .couple-card h3{ font-size:24px; margin-bottom:6px; }
-  .couple-role{ color:var(--olive); font-size:13px; text-transform:uppercase; letter-spacing:2px; margin-bottom:14px; }
-  .couple-card p{ font-size:14px; color:#5a5f52; }
+  .couple-role{ color:var(--crimson); font-size:13px; text-transform:uppercase; letter-spacing:2px; margin-bottom:14px; }
+  .couple-card p{ font-size:14px; color:#714a4d; }
   .couple-divider{ display:flex; align-items:center; justify-content:center; }
   .couple-divider span{ font-family:var(--font-script); font-size:40px; color:var(--gold); }
 
   /* ====================================================================
      6. COUNTDOWN SECTION
      ==================================================================== */
-  #countdown{ background:linear-gradient(160deg,var(--deep-olive),#2b3a24); color:var(--ivory); }
+  #countdown{ background:linear-gradient(160deg,var(--deep-crimson),#4d0f1d); color:var(--ivory); }
   #countdown .eyebrow{ color:var(--gold); }
   #countdown .section-title{ color:var(--ivory); }
-  #countdown .section-sub{ color:var(--champagne); }
+  #countdown .section-sub{ color:var(--peach-gold); }
   .countdown-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:16px; max-width:560px; margin:0 auto; }
   .countdown-box{ padding:26px 10px; text-align:center; color:var(--ivory); background:rgba(255,255,255,0.06); border-color:rgba(255,255,255,0.15); }
   .countdown-num{ font-family:var(--font-heading); font-size:clamp(32px,6vw,52px); color:var(--gold); transition:transform .3s var(--ease); }
   .countdown-num.tick{ transform:scale(1.15); }
-  .countdown-label{ font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--champagne); margin-top:6px; }
+  .countdown-label{ font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--peach-gold); margin-top:6px; }
 
   /* ====================================================================
      7. WEDDING DETAILS
@@ -369,7 +405,7 @@
   .detail-card{ padding:30px 24px; text-align:center; }
   .detail-icon{ font-size:30px; margin-bottom:14px; }
   .detail-card h4{ font-size:18px; margin-bottom:6px; }
-  .detail-card p{ font-size:14px; color:#5a5f52; }
+  .detail-card p{ font-size:14px; color:#714a4d; }
   .map-actions{ display:grid; gap:10px; margin-top:14px; }
   .map-actions .btn{ width:100%; padding:12px 16px; font-size:11px; }
 
@@ -382,13 +418,13 @@
   .timeline-item{ position:relative; padding-left:64px; margin-bottom:36px; }
   .timeline-dot{
     position:absolute; left:12px; top:2px; width:28px; height:28px; border-radius:50%;
-    background:var(--olive); color:var(--ivory); display:flex; align-items:center; justify-content:center;
-    font-size:14px; box-shadow:0 0 0 6px rgba(85,107,47,0.15);
+    background:var(--crimson); color:var(--ivory); display:flex; align-items:center; justify-content:center;
+    font-size:14px; box-shadow:0 0 0 6px rgba(120,25,38,0.15);
   }
   .timeline-item .glass-card{ padding:18px 22px; }
-  .timeline-time{ font-size:12px; letter-spacing:1.5px; text-transform:uppercase; color:var(--olive); font-weight:600; }
+  .timeline-time{ font-size:12px; letter-spacing:1.5px; text-transform:uppercase; color:var(--crimson); font-weight:600; }
   .timeline-item h4{ font-size:18px; margin:4px 0 6px; }
-  .timeline-item p{ font-size:13.5px; color:#5a5f52; }
+  .timeline-item p{ font-size:13.5px; color:#714a4d; }
 
   /* ====================================================================
      9. WEDDING JOURNEY (MILESTONES)
@@ -397,9 +433,9 @@
   .journey-grid{ display:grid; gap:20px; grid-template-columns:1fr; max-width:1000px; margin:0 auto; }
   .journey-card{ padding:28px 22px; text-align:center; }
   .journey-icon{ font-size:28px; margin-bottom:12px; }
-  .journey-date{ font-size:12px; color:var(--olive); letter-spacing:1.5px; text-transform:uppercase; margin-bottom:6px; }
+  .journey-date{ font-size:12px; color:var(--crimson); letter-spacing:1.5px; text-transform:uppercase; margin-bottom:6px; }
   .journey-card h4{ font-size:17px; margin-bottom:6px; }
-  .journey-card p{ font-size:13.5px; color:#5a5f52; }
+  .journey-card p{ font-size:13.5px; color:#714a4d; }
 
   /* ====================================================================
      10. GALLERY (optional) — 3D coverflow carousel
@@ -424,8 +460,8 @@
   }
   .coverflow-prev{ left:2px; } .coverflow-next{ right:2px; }
   .coverflow-dots{ display:flex; justify-content:center; gap:8px; margin-top:20px; }
-  .coverflow-dot{ width:8px; height:8px; border-radius:50%; background:rgba(85,107,47,.3); cursor:pointer; border:none; transition:background .3s, transform .3s; padding:0; }
-  .coverflow-dot.active{ background:var(--olive); transform:scale(1.35); }
+  .coverflow-dot{ width:8px; height:8px; border-radius:50%; background:rgba(128,28,37,.35); cursor:pointer; border:none; transition:background .3s, transform .3s; padding:0; }
+  .coverflow-dot.active{ background:var(--crimson); transform:scale(1.35); }
   @media (min-width:700px){
     .gallery-coverflow{ height:380px; }
     .coverflow-card{ width:240px; height:330px; margin:-165px 0 0 -120px; }
@@ -451,14 +487,14 @@
   /* ====================================================================
      11. RSVP
      ==================================================================== */
-  #rsvp{ background:linear-gradient(160deg,var(--olive),var(--deep-olive)); color:var(--ivory); text-align:center; }
-  #rsvp .section-sub{ color:var(--champagne); }
+  #rsvp{ background:linear-gradient(160deg,var(--crimson),var(--deep-crimson)); color:var(--ivory); text-align:center; }
+  #rsvp .section-sub{ color:var(--peach-gold); }
   .rsvp-card{ max-width:520px; margin:0 auto; padding:50px 30px; color:var(--ivory); }
-  .rsvp-card .script{ font-size:34px; color:var(--dark-champagne); display:block; margin-bottom:10px; }
+  .rsvp-card .script{ font-size:34px; color:var(--deep-gold); display:block; margin-bottom:10px; }
   .qr-card{ margin-top:32px; display:flex; flex-direction:column; align-items:center; gap:10px; }
   .qr-frame{ width:170px; height:170px; border-radius:16px; }
   .qr-frame img{ object-fit:contain; background:#fff; padding:10px; }
-  .qr-caption{ font-size:12px; letter-spacing:1.5px; text-transform:uppercase; color:var(--champagne); }
+  .qr-caption{ font-size:12px; letter-spacing:1.5px; text-transform:uppercase; color:var(--peach-gold); }
 
   /* ====================================================================
      12. GUEST INFORMATION
@@ -468,7 +504,7 @@
   .guest-card{ padding:26px 22px; }
   .guest-card-icon{ font-size:24px; margin-bottom:10px; }
   .guest-card h4{ font-size:16px; margin-bottom:6px; }
-  .guest-card p{ font-size:13.5px; color:#5a5f52; }
+  .guest-card p{ font-size:13.5px; color:#714a4d; }
 
   /* ====================================================================
      13. THANK YOU SECTION
@@ -476,24 +512,24 @@
   #thankyou{
     min-height:100svh; display:flex; align-items:center; justify-content:center; text-align:center;
     color:var(--ivory); position:relative; overflow:hidden; background-size:cover; background-position:center;
-    background-color:var(--deep-olive); padding:60px 20px;
+    background-color:var(--deep-crimson); padding:60px 20px;
   }
-  #thankyou::before{ content:""; position:absolute; inset:0; background:rgba(31,42,31,0.6); }
-  #thankyou.bg-missing{ background-image:linear-gradient(160deg,#3c4a2a,var(--deep-olive)); }
+  #thankyou::before{ content:""; position:absolute; inset:0; background:rgba(61,15,24,0.6); }
+  #thankyou.bg-missing{ background-image:linear-gradient(160deg,#5a101d,var(--deep-crimson)); }
   .thankyou-bg{ position:absolute; inset:0; background-size:cover; background-position:center; animation:slowZoom 20s ease-in-out infinite alternate; }
   @keyframes slowZoom{ from{ transform:scale(1); } to{ transform:scale(1.12); } }
   .thankyou-content{ position:relative; z-index:2; max-width:640px; }
   .thankyou-content .script{ font-size:clamp(38px,7vw,64px); color:var(--gold); margin-bottom:14px; }
   .thankyou-content h2{ color:var(--ivory); font-size:clamp(22px,4vw,30px); margin-bottom:16px; }
-  .thankyou-quote{ font-style:italic; color:var(--champagne); font-size:15px; }
+  .thankyou-quote{ font-style:italic; color:var(--peach-gold); font-size:15px; }
 
   /* ====================================================================
      14. FLOATING MUSIC CONTROLLER
      ==================================================================== */
   #music-toggle{
     position:fixed; bottom:24px; right:24px; z-index:9000; width:56px; height:56px; border-radius:50%;
-    background:linear-gradient(135deg,var(--gold),var(--olive)); color:var(--ivory); border:none; cursor:pointer;
-    box-shadow:0 10px 30px rgba(85,107,47,0.45); display:flex; align-items:center; justify-content:center; font-size:22px;
+    background:linear-gradient(135deg,var(--gold),var(--crimson)); color:var(--ivory); border:none; cursor:pointer;
+    box-shadow:0 10px 30px rgba(120,25,38,0.45); display:flex; align-items:center; justify-content:center; font-size:22px;
     transition:transform .3s var(--ease);
   }
   #music-toggle:hover{ transform:scale(1.08); }
@@ -581,6 +617,30 @@
     </div>
     <div class="scroll-cue" data-copy="scroll">Scroll</div>
   </header>
+
+  <section class="garden-notice">
+    <div class="container center">
+      <div class="garden-banner glass-card reveal">
+        <div class="garden-badge" data-copy="gardenNoticeEyebrow">Important Notice</div>
+        <h3>
+          <span data-copy="gardenNoticeTitle">Garden Wedding</span>
+          <span class="notice-chinese" data-copy="gardenNoticeTitleZh">花园婚礼</span>
+        </h3>
+        <p>
+          <span data-copy="gardenNoticeText">Please note: the ROM ceremony will be held outdoors in the garden, while dinner is indoors.</span><br>
+          <span class="notice-chinese" data-copy="gardenNoticeTextZh">请注意：结婚登记仪式将在花园室外举行，晚宴则安排在室内。</span>
+        </p>
+        <p class="notice-line">
+          <strong data-copy="gardenNoticeOutdoor">ROM Ceremony: Outdoor Garden</strong><br>
+          <span class="notice-chinese" data-copy="gardenNoticeOutdoorZh">结婚仪式：花园室外</span>
+        </p>
+        <p class="notice-line">
+          <strong data-copy="gardenNoticeIndoor">Dinner: Indoor Hall</strong><br>
+          <span class="notice-chinese" data-copy="gardenNoticeIndoorZh">晚宴：室内会场</span>
+        </p>
+      </div>
+    </div>
+  </section>
 
   <!-- ==================================================================
        BRIDE & GROOM
