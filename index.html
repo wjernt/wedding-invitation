@@ -101,7 +101,7 @@
     guestSubtitle: "A few helpful notes ahead of the celebration.",
     gardenNoticeEyebrow: "Important Notice",
     gardenNoticeTitle: "Garden Wedding",
-    gardenNoticeText: "Please note: the ROM ceremony will be held outdoors in the garden, while dinner is indoors.",
+    gardenNoticeText: "Please note: the ROM ceremony will be held outdoor in the garden, while dinner is indoors.",
     gardenNoticeOutdoor: "ROM Ceremony: Outdoor Garden",
     gardenNoticeIndoor: "Dinner: Indoor Hall",
     gardenNoticeTitleZh: "花园婚礼",
@@ -146,9 +146,7 @@
     { icon: "🚗", title: "Parking Information", description: "Complimentary parking available at the venue's main entrance." },
     { icon: "👗", title: "Dress Code",          description: "Garden wedding — kindly wear attire that is elegant yet comfortable." },
     { icon: "📅", title: "RSVP Deadline",       description: "Kindly respond by 30 days before the wedding date. 20-11-2026" },
-    { icon: "🌿", title: "Venue Note",          description: "Please note: the ROM ceremony is outdoors in the garden, while dinner will be held indoors." },
-    { icon: "📞", title: "Contact Person",      description: "Contact {contactName} at {contactPhone} for any questions." },
-    { icon: "📌", title: "Important Notes",     description: "Please arrive 30 minutes early. Kindly avoid heavy perfume during ceremony." }
+    { icon: "📞", title: "Contact Person",      description: "Contact {contactName} at {contactPhone} for any questions." }
   ];
 </script>
 
@@ -715,7 +713,7 @@
     </div>
     <div class="details-grid">
       <div class="detail-card glass-card reveal">
-        <div class="detail-icon">📅</div>
+        <div class="detail-icon" aria-hidden="true">📅</div>
         <h4>Date</h4>
         <p data-text="displayDate">Wedding Date</p>
       </div>
@@ -881,7 +879,7 @@
   function formatDisplayDate(dateStr){
     const d = new Date(dateStr + 'T00:00:00Z');
     if(isNaN(d)) return dateStr;
-    return d.toLocaleDateString('en-GB', { day:'numeric', month:'long', year:'numeric', timeZone:'UTC' });
+    return d.toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric', timeZone:'UTC' });
   }
   WEDDING_CONFIG.displayDate = formatDisplayDate(WEDDING_CONFIG.weddingDate);
 
