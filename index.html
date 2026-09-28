@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Wedding Invitation</title>
+<title>Jern ❤️ Gen - Wedding Invitation</title>
 
 <!-- ======================================================================
      CONFIGURATION
@@ -39,12 +39,12 @@
 
     backgroundMusic: "https://raw.githubusercontent.com/wjernt/wedding-invitation/main/Music/bgm.mp3",
 
-    rsvpUrl: "https://your-google-form-url",
+    rsvpUrl: "https://docs.google.com/forms/d/e/1FAIpQLSepRzzbLz9nzcg5Mdl2P3UwVbdqfQ4oJy9eB6zwYwvsnlwLsQ/viewform?usp=publish-editor",
 
     // QR code shown in the RSVP section. Defaults to the RSVP link above,
     // but you can point qrCodeLink at any URL (e.g. a wedding website).
-    qrCodeImage: "qrcode.png",
-    qrCodeLink: "https://your-google-form-url",
+    qrCodeImage: "qr-code.png",
+    qrCodeLink: "https://docs.google.com/forms/d/e/1FAIpQLSepRzzbLz9nzcg5Mdl2P3UwVbdqfQ4oJy9eB6zwYwvsnlwLsQ/viewform?usp=publish-editor",
 
     // Placeholder gallery images, only used when FEATURES.enableGallery = true
     galleryImages: [
@@ -61,7 +61,7 @@
   const WEDDING_TEXT = {
     loading: "loading...",
     welcomeTitle: "The Wedding Of",
-    startJourney: "Start Journey",
+    startJourney: "Start Journey\n开始旅程",
     heroEyebrow: "We're Getting Married",
     viewLocation: "📍 View Location",
     openGoogleMaps: "Google Maps",
@@ -231,7 +231,7 @@
     padding:14px 30px; border-radius:100px; font-size:14px; font-weight:600;
     letter-spacing:1px; text-transform:uppercase; cursor:pointer; border:none;
     transition:transform .4s var(--ease), box-shadow .4s var(--ease);
-    position:relative; overflow:hidden;
+    position:relative; overflow:hidden; white-space:pre-line;
   }
   .btn-primary{ background:linear-gradient(135deg,var(--crimson),var(--deep-crimson)); color:var(--ivory); box-shadow:0 8px 24px rgba(120,25,38,0.42); }
   .btn-outline{ background:rgba(255,255,255,0.15); color:var(--ivory); border:1px solid rgba(255,255,255,0.6); backdrop-filter:blur(6px); }
@@ -302,7 +302,8 @@
      ==================================================================== */
   #welcome-screen{
     position:fixed; inset:0; z-index:9998; display:flex; align-items:center; justify-content:center;
-    background:radial-gradient(circle at 50% 20%, #5a121d 0%, var(--deep-crimson) 70%);
+    background:radial-gradient(circle at 50% 20%, rgba(90, 18, 29, 0.932) 0%, rgba(61, 15, 24, 0.582) 70%);
+    backdrop-filter:blur(7px);
     transition:opacity 1s var(--ease), visibility 1s var(--ease);
   }
   #welcome-screen.fade-out{ opacity:0; visibility:hidden; pointer-events:none; }
