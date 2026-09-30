@@ -33,8 +33,8 @@
     // Image paths -- see TODO comment block near the bottom of <body> for
     // recommended dimensions / content for each placeholder.
     heroImage: "Picture/hero.jpeg",
-    bridePhoto: "bride.jpg",
-    groomPhoto: "groom.jpg",
+    bridePhoto: "Picture/bride.jpg",
+    groomPhoto: "Picture/groom.png",
     thankYouPhoto: "Picture/thankyou.jpeg",
 
     backgroundMusic: "https://raw.githubusercontent.com/wjernt/wedding-invitation/main/Music/bgm.mp3",
@@ -367,11 +367,19 @@
   .couple-grid{ display:grid; gap:32px; grid-template-columns:1fr; max-width:900px; margin:0 auto; }
   .couple-card{ padding:40px 28px; text-align:center; }
   .photo-frame{
-    width:160px; height:160px; border-radius:50%; margin:0 auto 20px; position:relative; overflow:hidden;
+    width:150px; height:230px; border-radius:5%; margin:0 auto 20px; position:relative; overflow:hidden;
     background:linear-gradient(135deg,var(--gold),var(--peach-gold));
     border:4px solid var(--ivory); box-shadow:0 10px 30px rgba(120,25,38,0.22);
   }
   .photo-frame img{ width:100%; height:100%; object-fit:cover; }
+  .photo-frame img[data-img="groomPhoto"]{
+    object-position:center 10%;
+    transform:scale(1) translateX(0%);
+  }
+  .photo-frame img[data-img="bridePhoto"]{
+    object-position:center 40%;
+    transform:scale(1) translateX(0%);
+  }
   .photo-placeholder-label{
     position:absolute; inset:0; display:flex; align-items:center; justify-content:center; text-align:center;
     font-size:11px; font-weight:600; letter-spacing:.5px; color:var(--deep-crimson); padding:10px; opacity:0;
